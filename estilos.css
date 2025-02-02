@@ -1,0 +1,1047 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Altura igual al viewport */
+  background: url('./imagenes/car.png') no-repeat center center fixed;
+  background-size: cover;
+
+  
+  font-family: Arial, sans-serif;
+}
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 24px;
+      color: white;
+    }
+    .card-form {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 15px auto;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-form label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: -10px;
+}
+
+.card-form input, .card-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-form input:focus, .card-form select:focus {
+    outline: none;
+    border-color: #723737;
+    box-shadow: 0 0 8px rgba(24, 119, 242, 0.3);
+}
+
+.card-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card-form .pepe {
+    background-color: #854949;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px;
+}
+  .card-form .pepe:hover {
+      background-color: #502626;
+      text-decoration: none;
+      color: #ffffff;
+  }
+  
+  table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+  }
+  
+  th {
+      background-color: #f4f4f4;
+  }
+  
+  tr:nth-child(even) {
+      background-color: #f9f9f9;
+  }
+  
+  tr:hover {
+      background-color: #f1f1f1;
+  }
+  
+  .tab-container {
+    display: flex;
+    justify-content: flex-start; /* Cambiar la alineación si es necesario */
+    margin-bottom: 10px;
+  }
+  
+  .tab-button {
+    padding: 20px 15px;
+    color: #000; /* Texto negro */
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #ccc; /* Borde gris */
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px 10px 0 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    text-decoration: none; /* Eliminar subrayado del texto */
+    margin-right: 5px; /* Separar las pestañas horizontalmente */
+  }
+  
+  
+  .tab-button:hover {
+      color: rgb(255, 255, 255); /* Cambiar el color del texto al pasar el mouse */
+      background-color: #ffffff; /* Mantener el fondo blanco */
+      border-color: #ffffff; /* Mantener el borde blanco */
+  }
+  
+  .tab-button.active {
+      color: rgb(0, 162, 255); /* Color azul para la pestaña activa */
+      background-color: #e6f7ff; /* Fondo azul claro para la pestaña activa */
+      border-bottom: none; /* Quitar el borde inferior en la pestaña activa */
+  }
+  
+  .tab-content {
+      display: none;
+  }
+  
+  .tab-content.active-tab {
+      display: block;
+  }
+  
+  @media (max-width: 768px) {
+      .card-form {
+          max-width: 95%; /* Reduce el ancho en pantallas pequeñas */
+          padding: 10px;
+      }
+  
+      table {
+          width: 95%;
+      }
+  }
+  
+ /* Estilo para los detalles del precio */
+.precio-detalles {
+    background-color: #f7f8fa;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .precio-detalles p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .precio-detalles ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .precio-detalles li {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .precio-detalles strong {
+    font-weight: bold;
+  }
+/* Estilos para la sección de pago */
+/* Contenedor para los datos de pago */
+.pago-datos {
+  padding: 16px; /* Espaciado interno más amplio */
+  border-radius: 8px; /* Bordes redondeados más grandes */
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra más destacada */
+  max-width: 600px; /* Ancho máximo aumentado */
+  margin: 20px auto; /* Centrado horizontal */
+  font-family: Arial, sans-serif;
+}
+
+/* Etiquetas de los campos */
+.pago-datos label {
+  display: block;
+  margin: 8px 0; /* Espaciado más amplio */
+  font-weight: bold;
+  font-size: 14px; /* Fuente más grande */
+}
+
+/* Inputs de los campos */
+.pago-datos input {
+  width: calc(100% - 24px); /* Ajustar ancho */
+  padding: 10px; /* Espaciado interno mayor */
+  margin-bottom: 12px; /* Espaciado entre inputs */
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Bordes redondeados más grandes */
+  font-size: 14px; /* Fuente más grande */
+  box-sizing: border-box;
+}
+
+/* Botón de los datos */
+.pago-datos button {
+  padding: 12px; /* Espaciado interno mayor */
+  background-color: #7a3b3b;
+  color: white;
+  border: none;
+  border-radius: 8px; /* Bordes redondeados más grandes */
+  cursor: pointer;
+  font-size: 16px; /* Tamaño de fuente mayor */
+  width: 100%; /* Botón ocupa todo el ancho */
+}
+
+.pago-datos button:hover {
+  background-color: #0370ff;
+}
+
+/* Contenedor del resumen */
+.pago-resumen {
+  background-color: #f7f8fa;
+  padding: 16px; /* Espaciado interno mayor */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra más destacada */
+  max-width: 600px; /* Ancho máximo aumentado */
+  margin: 20px auto; /* Centrado horizontal */
+}
+
+/* Lista en el resumen */
+.pago-resumen ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pago-resumen li {
+  font-size: 14px; /* Fuente más grande */
+  color: #555;
+  margin-bottom: 8px; /* Espaciado mayor */
+}
+
+/* Logo de Klarna */
+.pago-resumen img.klarna-logo {
+  width: 80px; /* Aumentar tamaño del logo */
+  margin: 10px 0;
+}
+
+/* Botón del resumen */
+.pago-resumen button {
+  width: 100%;
+  padding: 12px; /* Espaciado interno mayor */
+  background-color: #202020;
+  color: white;
+  border: none;
+  border-radius: 8px; /* Bordes redondeados más grandes */
+  font-size: 16px; /* Fuente más grande */
+  cursor: pointer;
+}
+
+.pago-resumen button:hover {
+  background-color: #502626;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .pago-datos, .pago-resumen {
+    max-width: 95%; /* Ocupa casi todo el ancho disponible */
+    margin: 16px auto; /* Reducir margen */
+    padding: 12px; /* Reducir padding interno */
+  }
+
+  .pago-datos label, 
+  .pago-resumen li {
+    font-size: 12px; /* Ajustar fuente en pantallas pequeñas */
+  }
+
+  .pago-datos input {
+    font-size: 12px; /* Ajustar tamaño de texto */
+    padding: 8px; /* Reducir padding */
+  }
+
+  .pago-datos button,
+  .pago-resumen button {
+    font-size: 14px; /* Botones más grandes */
+    padding: 10px; /* Reducir padding */
+  }
+
+  .pago-resumen img.klarna-logo {
+    width: 70px; /* Ajustar tamaño del logo */
+  }
+}
+
+
+/* Estilos para la sección de documentos */
+#documentos {
+  background-color: #f7f8fa;
+  padding: 15px; /* Aumentar el espaciado interno */
+  border-radius: 6px; /* Bordes ligeramente más redondeados */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Sombra ligeramente más pronunciada */
+  max-width: 450px; /* Aumentar el ancho máximo */
+  margin: 15px auto; /* Centrar horizontalmente */
+}
+
+/* Título del encabezado */
+#documentos h2 {
+  font-size: 18px; /* Aumentar tamaño del título */
+  margin-bottom: 12px; /* Aumentar espaciado inferior */
+}
+
+/* Párrafos */
+#documentos p {
+  font-size: 14px; /* Aumentar tamaño de texto */
+  line-height: 1.6; /* Aumentar la altura de línea */
+  margin-bottom: 10px; /* Aumentar margen inferior */
+}
+
+/* Lista de elementos */
+#documentos ul {
+  list-style-type: disc;
+  margin-left: 20px; /* Aumentar el margen izquierdo */
+}
+
+#documentos ul li {
+  font-size: 14px; /* Aumentar tamaño de texto */
+  color: #555;
+  margin-bottom: 6px; /* Aumentar espacio entre elementos */
+}
+
+/* Opciones de documentos */
+.documento-opciones {
+  margin-top: 15px; /* Aumentar margen superior */
+  display: flex;
+  justify-content: space-between;
+  gap: 8px; /* Aumentar el espacio entre botones */
+}
+
+.documento-opciones button {
+  padding: 8px 14px; /* Aumentar espaciado interno */
+  font-size: 14px; /* Aumentar tamaño de texto */
+  cursor: pointer;
+  border: none;
+  border-radius: 6px; /* Bordes más redondeados */
+  background-color: #7a3b3b;
+  color: white;
+  flex: 1; /* Mantener el mismo espacio entre botones */
+}
+
+.documento-opciones button:hover {
+  background-color: #7a3b3b;
+}
+
+.documento-opciones .btn-mas-tarde {
+  background-color: #ccc;
+}
+
+.documento-opciones .btn-mas-tarde:hover {
+  background-color: #b3b3b3;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  #documentos {
+    max-width: 95%; /* Ocupa casi todo el ancho disponible */
+    padding: 12px; /* Reducir padding interno */
+  }
+
+  #documentos h2 {
+    font-size: 16px; /* Título más pequeño */
+  }
+
+  #documentos p, 
+  #documentos ul li {
+    font-size: 13px; /* Texto más pequeño */
+  }
+
+  .documento-opciones button {
+    font-size: 13px; /* Botones más pequeños */
+    padding: 6px 12px; /* Reducir espaciado interno */
+  }
+}
+
+
+  /* Contenedor general para la tarjeta en el costado de la pantalla */
+.card-table {
+  position: fixed; /* Fijar la tarjeta en el costado */
+  top: 50%; /* Centrar verticalmente */
+  left: -10px; /* Ubicar a la izquierda (puedes cambiarlo a right si lo deseas a la derecha) */
+  transform: translateY(-50%); /* Ajustar para que esté centrado en el medio */
+  width: 250px; /* Hacer la tarjeta más pequeña */
+
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  padding: 10px; /* Reducir padding */
+  z-index: 1000; /* Asegurar que esté encima de otros elementos */
+  font-family: Arial, sans-serif; /* Cambiar la fuente a una más pequeña */
+  transition: left 0.3s ease-in-out; /* Animación para el desplazamiento */
+}
+
+/* Título de la tarjeta */
+.card-table h2 {
+  text-align: center;
+  margin-bottom: 6px; /* Espacio reducido */
+  font-size: 10px; /* Reducir aún más el tamaño del texto */
+  color: #333;
+}
+
+/* Tabla dentro de la tarjeta */
+#tablaVehiculos {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  border-collapse: collapse; /* Eliminar espacios entre celdas */
+  font-size: 8px; /* Reducir aún más tamaño de fuente */
+  margin-top: 4px; /* Separación de la tabla respecto al título */
+}
+
+/* Estilo para las celdas de la tabla */
+#tablaVehiculos th,
+#tablaVehiculos td {
+  padding: 3px; /* Reducir más el padding */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 8px; /* Reducir aún más tamaño de la fuente en las celdas */
+}
+
+
+/* Estilo para los botones */
+.card-table button {
+  font-size: 8px; /* Reducir tamaño de los botones */
+  padding: 4px; /* Reducir padding en botones */
+  width: 100%; /* Botones más anchos */
+  margin-top: 4px; /* Espacio superior */
+  background-color: #723737 ; /* Color de fondo del botón */
+  color: white; /* Color de texto del botón */
+  border: none; /* Sin bordes */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cursor en forma de mano */
+}
+
+/* Estilo para los botones al pasar el mouse */
+.card-table button:hover {
+  background-color: #723737 ; /* Cambio de color en hover */
+}
+
+/* Clase para animación horizontal de la tarjeta */
+.card-table.move-right {
+  left: 80%; /* Mover a la derecha de la pantalla */
+}
+    /* Ajustar el color al hacer hover en los días del calendario */
+.flatpickr-day:hover,
+.flatpickr-day.selected:hover,
+.flatpickr-day.today:hover {
+  background: #723737 ; /* Color más oscuro al hacer hover */
+  color: white; /* Texto blanco para contraste */
+  border-radius: 50%; /* Mantener forma circular */
+}
+
+/* Ajustar hover para los botones de navegación */
+.flatpickr-prev-month:hover,
+.flatpickr-next-month:hover {
+  background: #723737 ; /* Fondo consistente con el día seleccionado */
+  color: white; /* Texto blanco */
+  border-radius: 50%; /* Mantener bordes redondeados */
+}
+
+/* Responsividad para hover en pantallas pequeñas */
+@media (max-width: 600px) {
+  .flatpickr-day:hover,
+  .flatpickr-day.selected:hover,
+  .flatpickr-day.today:hover {
+    background: #723737 ; /* Color más oscuro en pantallas pequeñas */
+  }
+
+  .flatpickr-prev-month:hover,
+  .flatpickr-next-month:hover {
+    background: #723737 ; /* Consistencia para botones de navegación */
+  }
+}
+input[type="text"], input[type="email"], input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Asegura que el padding y border no afecten el ancho */
+}
+
+/* Cambiar color del borde al enfocar */
+input:focus {
+  border-color: #723737 ;
+  outline: none;
+}
+
+/* Estilo de la lista de autocompletado */
+.ui-autocomplete {
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+/* Estilo de las sugerencias individuales */
+.ui-menu-item {
+  padding: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Color de fondo para la opción activa */
+.ui-state-active {
+  background-color: #723737  !important;
+  color: white !important;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 600px) {
+  .card {
+    padding: 15px;
+  }
+
+  input[type="text"], input[type="email"], input[type="number"] {
+    font-size: 12px;
+    padding: 6px;
+  }
+}
+/* Posicionar la sección informativa a la derecha y más abajo */
+.info-section {
+  position: absolute;
+  top: 150px; /* Ajusta esta distancia para colocarla más abajo */
+  right: 20px; /* Distancia desde el lado derecho */
+  width: 350px; /* Ancho ligeramente mayor para acomodar el contenido */
+  padding: 25px; /* Aumentar relleno para dar espacio al contenido */
+  border-radius: 8px;
+  /* Más opacidad */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+  text-align: center;
+}
+
+/* Estilos del contenido */
+.info-section h2 {
+  font-size: 22px; /* Aumentar el tamaño de la fuente */
+  color: #ffffff;
+  margin-bottom: 15px; /* Ajustar margen para dar más espacio */
+}
+
+.info-section p {
+  font-size: 16px; /* Aumentar el tamaño de la fuente */
+  color: #ffffff;
+  line-height: 1.6; /* Aumentar el interlineado para mejorar la legibilidad */
+  margin-bottom: 15px; /* Ajustar margen para separar más los elementos */
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Aumentar el espacio entre los elementos */
+  margin-bottom: 20px; /* Espacio inferior para las estrellas */
+}
+
+.contact span {
+  font-size: 16px; /* Aumentar el tamaño del texto */
+  color: #555;
+}
+
+/* Botón verde para atención al cliente */
+.contact-button {
+  display: inline-block;
+  padding: 12px 25px; /* Aumentar el padding para un botón más grande */
+  font-size: 16px; /* Aumentar el tamaño de la fuente */
+  font-weight: bold;
+  color: white;
+  background-color: #28a745; /* Verde principal */
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.contact-button:hover {
+  background-color: #218838; /* Verde más oscuro al pasar el ratón */
+  transform: scale(1.05); /* Pequeño efecto de zoom */
+}
+
+.contact-button:active {
+  transform: scale(0.95); /* Efecto de clic */
+}
+
+.whatsapp-link {
+  font-size: 35px; /* Aumentar el tamaño del icono de WhatsApp */
+  color: #25d366; /* Color oficial de WhatsApp */
+  text-decoration: none;
+  transition: transform 0.2s;
+  margin-top: 20px;
+}
+
+.whatsapp-link:hover {
+  transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
+}
+
+/* Estrellas de calificación */
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 8px; /* Espacio entre estrellas */
+}
+
+.rating i {
+  font-size: 18px; /* Aumentar el tamaño de las estrellas */
+  color: #efff15; /* Verde para las estrellas */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .info-section {
+    position: relative; /* Cambia a estático para pantallas pequeñas */
+    top: auto;
+    right: auto;
+    margin-top: 20px;
+    width: 100%; /* Ocupa todo el ancho disponible */
+  }
+  
+  /* Cambiar a una columna en pantallas pequeñas */
+  .contact {
+    flex-direction: column;
+    gap: 15px; /* Espaciado entre los elementos */
+  }
+}
+.price-section {
+  margin: 40px auto;
+  text-align: center;
+}
+
+.price-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+/* Estilos de la tarjeta */
+.card {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+  top: 600px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+
+.header-item {
+  display: flex;
+  align-items: center;
+  margin: 0 15px;
+}
+
+.header-item i {
+  font-size: 24px;
+  margin-right: 10px;
+  color: #502626 ;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.feature {
+  flex: 1 1 45%;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  padding: 15px;
+
+
+}
+
+.feature i {
+  font-size: 24px;
+  margin-right: 15px;
+  color: #723737 ;
+}
+/* Estilos para los precios */
+/* Contenedor principal de precios */
+.prices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centra las tarjetas */
+  gap: 20px; /* Espaciado entre tarjetas */
+  margin: 50px auto; /* Espaciado razonable antes del contenedor */
+}
+
+/* Tarjetas de precio */
+.price-card {
+  flex: 1 1 calc(33.333% - 20px); /* Tres tarjetas por fila con espacio entre ellas */
+  max-width: calc(33.333% - 20px);
+  background: linear-gradient(145deg, #e6e6e6, #ffffff); /* Fondo con profundidad */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.price-card:hover {
+  transform: translateY(-10px); /* Eleva la tarjeta */
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3), -12px -12px 20px rgba(0, 0, 0, 0.8); /* Sombra más intensa */
+}
+
+/* Títulos de las tarjetas */
+.price-card h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* Precio destacado */
+.price {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 15px 0;
+  color: #723737 ;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Detalles de precios */
+.price-details {
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.price-card .price-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.price-card .price-details ul li {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #723737 ;
+  font-weight: 500;
+}
+
+.price-card .price-details ul li i {
+  font-size: 18px;
+  color: #723737 ;
+}
+
+/* Botón dentro de la tarjeta */
+.price-card button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #7a3b3b ;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.price-card button:hover {
+  background-color: #7a3b3b ;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsividad */
+@media (max-width: 1024px) {
+  .prices {
+    flex-wrap: wrap; /* Permite que las tarjetas bajen de fila */
+  }
+
+  .price-card {
+    flex: 1 1 45%; /* Dos tarjetas por fila en pantallas medianas */
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .prices {
+    flex-direction: column; /* Tarjetas en una sola columna */
+    gap: 15px; /* Ajusta el espacio entre tarjetas */
+  }
+
+  .price-card {
+    flex: 1 1 100%; /* Ocupan todo el ancho en pantallas pequeñas */
+    max-width: 100%;
+  }
+}
+
+  body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+       /* Encabezado general */
+       .header-background {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: small;
+        color: rgb(255, 255, 255);
+        padding: 10px 0; /* Reduce el padding vertical */
+        background-color: #0000006e;
+        width: 100%; /* Asegura que ocupe todo el ancho */
+        position: relative; /* Ajusta el comportamiento dentro del flujo */
+        margin-bottom: 30px;
+        margin-top: 50px; /* Reduce el espacio superior */
+      }
+      
+.header-item {
+  display: flex;
+  align-items: center;
+  margin: 0 15px;
+}
+
+/* Encabezado principal */
+#main-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px; /* Reduce el padding general */
+  background-color: #ffffff; /* Fondo blanco */
+  color: black;
+}
+
+.logo img {
+  max-width: 140px; /* Tamaño compacto del logo */
+  height: auto;
+}
+
+/* Enlaces de navegación */
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: rgb(56, 54, 54);
+  padding-inline: 20px;
+  text-decoration: none;
+  font-size: 14px; /* Tamaño ligeramente mayor */
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 350; /* Cambiado a semibold */
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #502626; /* Color del texto */
+ 
+  transform: scale(1.1); /* Aumenta el tamaño del texto */
+ 
+}
+
+
+/* Botón de WhatsApp */
+#whatsapp-icon {
+  display: flex;
+  align-items: center;
+}
+
+.whatsapp-button {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaciado entre el icono y el texto */
+  text-decoration: none;
+  background-color: #25D366; /* Color verde de WhatsApp */
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.whatsapp-button img {
+  max-width: 24px; /* Tamaño del icono */
+  height: auto;
+}
+
+.whatsapp-button:hover {
+  background-color: #1DA851; /* Color verde más oscuro al pasar el mouse */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Características o secciones destacadas */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 90px;
+}
+
+.feature {
+  flex: 1 1 calc(50% - 20px);
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.feature i {
+  font-size: 24px;
+  margin-right: 15px;
+  color: #723737 ;
+}
+ .autocomplete-list {
+            position: absolute;
+            border: 1px solid #ccc;
+            background-color: white;
+            max-height: 150px;
+            overflow-y: auto;
+            width: calc(100% - 30px);
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .autocomplete-list div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .autocomplete-list div:hover {
+            background-color: #f0f0f0;
+     
+
+    }
+
+    .flecha {
+        position: absolute;
+        right: 10px;
+        cursor: pointer;
+        pointer-events: none; /* Evita interferir con los clics */
+    }
+    /* Contenedor de la fecha */
+.fecha-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+margin-top: 10px;
+}
+
+/* Estilos del campo de fecha */
+.fecha-input {
+  width: calc(100% - 16px); /* Ajusta el ancho relativo */
+  padding: 10px; /* Aumenta el relleno interno */
+  padding-left: 40px; /* Espacio para el icono */
+  margin-bottom: -10px; /* Ajusta el margen inferior */
+  border: 1px solid #ccc;
+  border-radius: 4px; 
+  font-size: 14px; /* Aumenta el tamaño de fuente */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  height: 50px; 
+  box-sizing: border-box; 
+  font-family: 'Roboto', sans-serif; 
+  font-weight: 500; 
+}
+
+/* Estilo del icono de calendario */
+.fecha-icon {
+  position: absolute;
+  left: 300px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+}
+
+/* Estilos para los campos de entrada */
+.card-form input {
+  width: calc(100% - 16px); /* Ajusta el ancho relativo */
+  padding: 10px; /* Aumenta el relleno interno */
+  margin-bottom: 10px; /* Ajusta el margen inferior */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px; 
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  height: 40px; 
+  box-sizing: border-box; 
+}
+
+/* Estilo para los labels */
+label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+
+}

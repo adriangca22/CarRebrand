@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Burocracia Cero</title>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.4.js"></script>
+  <!-- Tus estilos personalizados -->
+  <link rel="stylesheet" href="estilos.css">
+  <meta charset="UTF-8">
+ 
+  <title>Burocracia Cero</title>
+  <style>
+    
+    .tab-container {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+
+    .tab-button {
+      padding: 20px 15px;
+      color: #000; /* Texto negro */
+      background-color: #ffffff; /* Fondo blanco */
+      border: 1px solid #ccc; /* Borde gris */
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 10px 10px 0 0;
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      text-decoration: none; /* Eliminar subrayado del texto */
+    }
+
+    .tab-button:hover {
+      color: #7a3b3b; /* Cambiar el color del texto a azul al pasar el mouse */
+    }
+
+    .tab-button.active {
+      color: #ffffff; /* Texto blanco para la pestaña activa */
+      background-color: #502626; /* Fondo azul para la pestaña activa */
+      border-bottom: none; /* Quitar el borde inferior en la pestaña activa */
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active-tab {
+      display: block;
+    }
+      /* Estilos para los inputs con flechas */
+      input {
+        font-size: 14px;
+    }
+
+    .flecha {
+        font-size: 10px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #502626;
+    }
+
+    /* Espaciado adicional para los campos con flechas */
+    #comunidadAutonomaComprador,
+    #combustible,
+    #marca,
+    #modelo {
+        padding-right: 30px; /* Aseguramos que haya espacio para la flecha */
+    }
+  </style>
+</head>
+<header>
+<body>
+  
+  <nav id="main-navigation">
+    <a href="#" class="logo">
+        <img src="/imagenes/logo.png" alt="Logotipo de la empresa">
+    </a>
+    <div class="nav-links">
+        <a href="#seccion1">Trámites DGT</a>
+        <a href="#seccion2">Herramientas</a>
+        <a href="#seccion3">Cómo funciona</a>
+        <a href="#seccion4">FAQs</a>
+    </div>
+    <div id="whatsapp-icon">
+        <a href="https://wa.me/123456789" target="_blank" class="whatsapp-button">
+            <img src="/imagenes/prime--whatsapp (2).svg" alt="WhatsApp">
+            Contáctenos
+        </a>
+    </div>
+</nav>
+
+
+
+  <div class="container">
+    <!-- Sección informativa -->
+    <div class="info-section">
+      <h2>Cambio de nombre de coche o moto 100% online</h2>
+      <p>
+        Tramita tu cambio de nombre con la mejor experiencia de comprar o vender un vehículo de segunda mano: 
+        sin papeleos, sin riesgos y súper rápido.
+      </p>
+  
+      <!-- Estrellas de calificación -->
+      <div class="rating">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+      </div>
+      <p style="font-size: 11px;">
+        TrustScore 4.4  504 opiniones
+      </p>
+  
+      <!-- Botón de atención al cliente -->
+      <div class="contact">
+        <a href="https://wa.me/tu-numero" target="_blank" class="contact-button">
+          Atención al cliente
+        </a>
+        <a href="https://wa.me/tu-numero" target="_blank" class="whatsapp-link">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <div class="card-form">
+    <div class="tab-container">
+      <button class="tab-button" onclick="showTab('vehiculo')">Vehículo</button>
+      <button class="tab-button" onclick="showTab('precio')">Precio</button>
+      <button class="tab-button" onclick="showTab('pago')">Pago</button>
+      <button class="tab-button" onclick="showTab('documentos')">Documentos</button>
+    </div>
+  
+    <div id="vehiculo" class="tab-content active-tab">
+      <img src="/imagenes/car-citroen-vehicle-2-svgrepo-com.svg" alt="Vehículo" width="60" height="64">
+  
+      <form id="formVehiculo">
+        <!-- Fecha de Matriculación -->
+        <label for="fechaMatriculacion">Fecha de Matriculación</label>
+        <div class="fecha-container">
+          <input type="date" id="fechaMatriculacion" name="fechaMatriculacion" class="fecha-input" required placeholder="dd/mm/yyyy">
+          <span class="fecha-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m4 7H4a2 2 0 00-2 2v7a2 2 0 002 2h16a2 2 0 002-2v-7a2 2 0 00-2-2z" />
+            </svg>
+          </span>
+        </div>
+            <!-- Marca -->
+        <label for="marca">Marca</label>
+        <div class="input-container">
+          <input type="text" id="marca" name="marca" placeholder="Marca" required>
+        </div>
+         
+        <!-- Modelo -->
+        <label for="modelo">Modelo</label>
+        <div class="input-container">
+          <input type="text" id="modelo" name="modelo" placeholder="Modelo" required>
+        </div>
+        <!-- Comunidad Autónoma -->
+        <label for="comunidadAutonomaComprador">Comunidad Autónoma del Comprador</label>
+        <div class="input-container">
+          <input type="text" id="comunidadAutonomaComprador" name="comunidadAutonomaComprador" placeholder="Comunidad Autónoma" required>
+        </div>
+   
+        <!-- Combustible -->
+        <label for="combustible">Combustible</label>
+        <div class="input-container">
+          <input type="text" id="combustible" name="combustible" placeholder="Combustible" required>
+        </div>
+  
+        <!-- Correo -->
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" placeholder="Correo" required>
+  
+      
+  
+        <!-- Precio Contrato -->
+        <label for="precioContrato">Precio de Contrato (€)</label>
+       
+        <input type="number" id="precioContrato" name="precioContrato" placeholder="Precio de contrato (€)" required>
+      </form>
+      <button type="button" id="calcularPrecioBtn" class="pepe">Calcular precio</button>
+    </div>
+
+    <div id="precio" class="tab-content">
+      <h2>Precio</h2>
+      <form id="formPrecio">
+        <div class="precio-detalles">
+          <p><strong>Cambio de nombre:</strong> <span id="total">151.85 €</span></p>
+          <div id="resultadoPrecio" style="margin-top: 20px;"></div>
+    
+          <p><strong>Incluye:</strong></p>
+          <ul>
+            <li><span>Tasas DGT:</span> <span id="tasasDGT">55.70 €</span></li>
+            <li><span>Gestión:</span> <span id="gestion">61.36 €</span></li>
+            <li><span>IVA:</span> <span id="iva">12.89 €</span></li>
+            <li><span>Envío a domicilio:</span> <span id="envio">Gratuito</span></li>
+            <li><span>Impuesto de transmisiones +info:</span> <span id="impuesto">0 €</span></li>
+          </ul>
+    
+          <p><strong>Te recomendamos añadir:</strong></p>
+          <ul>
+            <li><span id="recomendacion1">12 €</span></li>
+            <li><span id="recomendacion2">9.90 €</span></li>
+          </ul>
+    
+          <p><strong>Total:</strong> <span id="totalCambio">151.85 €</span></p>
+        </div>
+      </form>
+    </div>
+
+    <div id="pago" class="tab-content">
+      <h2>Pago</h2>
+      <form id="formPago">
+        <div class="pago-datos">
+          <label for="nombreApellidos">Nombre y Apellidos</label>
+          <input type="text" id="nombreApellidos" name="nombreApellidos" placeholder="Nombre y Apellidos" required>
+    
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+    
+          <button type="button" onclick="mostrarResumen()">Ver resumen del trámite</button>
+        </div>
+    
+        <div class="pago-resumen">
+          <p><strong><span id="pagoTotal">129.95</span> €</strong></p>
+    
+          <ul>
+            <li><strong>Garantía de devolución</strong></li>
+            <li><strong>Envío gratuito</strong></li>
+            <li><strong>Atención 24/7</strong></li>
+          </ul>
+    
+         
+       
+    
+          <p><strong>Tarjeta de crédito:</strong></p>
+          <input type="text" placeholder="Número de tarjeta" required>
+          <input type="text" placeholder="Fecha de expiración" required>
+          <input type="text" placeholder="Código de seguridad" required>
+    
+          <button type="submit">Tramitar <span id="pagoTotalBoton">129.95</span> €</button>
+        </div>
+      </form>
+    </div>
+    
+
+    <div id="documentos" class="tab-content">
+      <h2>Documentos</h2>
+      <p><strong>Adjuntar documentación</strong></p>
+      <p style="font-size: 13px;">.Ten preparada la siguiente documentación, te la pediremos:</p>
+    
+      <p style="font-size: 13px;">Es importante que la documentación que se adjunte sea de calidad.</p>
+      <ul>
+        <li><strong>DNI del comprador</strong></li>
+        <li><strong>Padrón comprador</strong>: Solo si el domicilio del comprador no coincide con el DNI, deberá presentar un certificado de empadronamiento.</li>
+        <li><strong>DNI del vendedor</strong></li>
+        <li><strong>Ficha técnica del vehículo</strong></li>
+        <li><strong>Permiso de circulación original del vehículo</strong></li>
+      </ul>
+    
+      <p style="font-size: 13px;">Si vas a hacer fotos, te recomendamos:</p>
+      <ul>
+        <li>Asegúrate de evitar brillos en los documentos.</li>
+        <li>Tener una buena iluminación y evitar sombras.</li>
+        <li>Enfocar bien, la foto debe ser nítida y no estar borrosa.</li>
+        <li>No cortar ni doblar, los documentos deben verse completos.</li>
+      </ul>
+    
+      <div class="documento-opciones">
+        <button type="button" class="btn-adjuntar">Adjuntar ahora</button>
+        <button type="button" class="btn-mas-tarde">Más tarde</button>
+      </div>
+    </div>
+
+    <div class="card-table">
+      <h2>Listado de Vehículos</h2>
+      <table id="tablaVehiculos">
+        <thead>
+          <tr>
+            <th>Fecha de Matriculación</th>
+            <th>Comunidad Autónoma</th>
+            <th>Combustible</th>
+            <th>Correo</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+</header>
+<div class="section">
+  <div class="header-background">
+      <div class="header-item">
+          <i class="fas fa-undo"></i>
+          <span>Garantía de devolución</span>
+      </div>
+      <div class="header-item">
+          <i class="fas fa-truck"></i>
+          <span>Envío a toda la península</span>
+      </div>
+      <div class="header-item">
+          <i class="fas fa-headset"></i>
+          <span>Atención 24/7</span>
+      </div>
+      <div class="header-item">
+          <i class="fas fa-clock"></i>
+          <span>Provisional al instante</span>
+      </div>
+  </div>
+  <h1  style="color: white;">Precio del cambio del titular de coche y moto</h1>
+<h2 style="color: white;font-size: 15px;text-align: center;margin-bottom: 50px;">
+  El precio de un cambio de nombre de un vehículo se configura sumando el coste de la transferencia más los impuestos asociados ITP</h2>
+
+  <div class="prices">
+      <div class="price-card">
+      
+          <h3>¿Cuánto cuesta el cambio de nombre de un coche?</h3>
+          <div class="price">€129.95</div>
+          <p class="price-details">TODO INCLUIDO<br>Envío a domicilio incluido<br>Gestión del ITP incluida</p>
+      </div>
+      <div class="price-card">
+          <h3>¿Cuánto cuesta el cambio de nombre de una moto?</h3>
+          <div class="price">€129.95</div>
+          <p class="price-details">TODO INCLUIDO<br>Envío a domicilio incluido<br>Gestión del ITP incluida</p>
+      </div>
+      <div class="price-card">
+          <h3>¿Cuánto cuesta el cambio de nombre de un ciclomotor?</h3>
+          <div class="price">€99.00</div>
+          <p class="price-details">TODO INCLUIDO<br>Envío a domicilio incluido<br>Gestión del ITP incluida</p>
+      </div>
+  </div>
+</div>
+<script type="module" src="./app.js"></script>
+<script type="module" src="./tabla.js"></script>
+ 
+<script>
+  // Función para manejar el cambio de pestañas
+  function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-button');
+
+    // Ocultar todas las secciones y eliminar la clase 'active' de los botones
+    tabs.forEach(tab => tab.classList.remove('active-tab'));
+    buttons.forEach(button => button.classList.remove('active'));
+
+    // Mostrar la sección seleccionada
+    const selectedTab = document.getElementById(tabId);
+    if (selectedTab) {
+      selectedTab.classList.add('active-tab');
+    }
+
+    // Marcar la pestaña correspondiente como activa
+    const activeButton = document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`);
+    if (activeButton) {
+      activeButton.classList.add('active');
+    }
+  }
+
+  // Inicializar las funciones al cargar el DOM
+  document.addEventListener("DOMContentLoaded", () => {
+    // Mostrar la primera pestaña por defecto
+    showTab('vehiculo');
+
+  
+
+    // Inicializar autocompletados
+    initializeAutocomplete();
+  });
+
+  // Función para inicializar autocompletados
+
+ 
+</script>
+
+</body>
+
+</html>
+   
