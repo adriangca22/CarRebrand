@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh; /* Altura igual al viewport */
-  background: url('./imagenes/car.png') no-repeat center center fixed;
+  background: url('./car.png') no-repeat center center fixed;
   background-size: cover;
 
   
@@ -53,7 +53,7 @@ body {
 .card-form input:focus, .card-form select:focus {
     outline: none;
     border-color: #723737;
-    box-shadow: 0 0 8px rgba(24, 119, 242, 0.3);
+  
 }
 
 .card-form button {
@@ -134,7 +134,7 @@ body {
   }
   
   .tab-button.active {
-      color: rgb(0, 162, 255); /* Color azul para la pestaña activa */
+      color: #502626; /* Color azul para la pestaña activa */
       background-color: #e6f7ff; /* Fondo azul claro para la pestaña activa */
       border-bottom: none; /* Quitar el borde inferior en la pestaña activa */
   }
