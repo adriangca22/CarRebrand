@@ -132,11 +132,7 @@ body {
      
   }
   
-  .tab-button.active {
-      color: #502626; /* Color azul para la pestaña activa */
-      background-color: #e6f7ff; /* Fondo azul claro para la pestaña activa */
-      border-bottom: none; /* Quitar el borde inferior en la pestaña activa */
-  }
+ 
   
   .tab-content {
       display: none;
