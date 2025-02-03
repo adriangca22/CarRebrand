@@ -128,7 +128,7 @@ body {
   
   
   .tab-button:hover {
-      color:#502626; /* Cambiar el color del texto al pasar el mouse */
+      color:#ffffff; /* Cambiar el color del texto al pasar el mouse */
      
   }
   
@@ -225,7 +225,7 @@ body {
 }
 
 .pago-datos button:hover {
-  background-color: #0370ff;
+  background-color:#7a3b3b;
 }
 
 /* Contenedor del resumen */
