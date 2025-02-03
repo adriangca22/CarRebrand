@@ -127,10 +127,7 @@ body {
   }
   
   
-  .tab-button:hover {
-      color:#ffffff; /* Cambiar el color del texto al pasar el mouse */
-     
-  }
+
   
  
   
@@ -224,9 +221,6 @@ body {
   width: 100%; /* Botón ocupa todo el ancho */
 }
 
-.pago-datos button:hover {
-  background-color:#7a3b3b;
-}
 
 /* Contenedor del resumen */
 .pago-resumen {
