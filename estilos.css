@@ -44,7 +44,7 @@ body {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+
     border-radius: 4px;
     font-size: 14px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -128,9 +128,8 @@ body {
   
   
   .tab-button:hover {
-      color: rgb(255, 255, 255); /* Cambiar el color del texto al pasar el mouse */
-      background-color: #ffffff; /* Mantener el fondo blanco */
-      border-color: #ffffff; /* Mantener el borde blanco */
+      color:#502626; /* Cambiar el color del texto al pasar el mouse */
+     
   }
   
   .tab-button.active {
