@@ -33,12 +33,12 @@
       cursor: pointer;
       font-size: 16px;
       border-radius: 10px 10px 0 0;
-      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+   
       text-decoration: none; /* Eliminar subrayado del texto */
     }
 
     .tab-button:hover {
-      color: #7a3b3b; /* Cambiar el color del texto a azul al pasar el mouse */
+      color: #7a3b3b; 
     }
 
     .tab-button.active {
@@ -58,24 +58,6 @@
       input {
         font-size: 14px;
     }
-
-    .flecha {
-        font-size: 10px;
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        color: #502626;
-    }
-
-    /* Espaciado adicional para los campos con flechas */
-    #comunidadAutonomaComprador,
-    #combustible,
-    #marca,
-    #modelo {
-        padding-right: 30px; /* Aseguramos que haya espacio para la flecha */
-    }
   </style>
 </head>
 <header>
@@ -86,6 +68,7 @@
         <img src="/logo.png" alt="Logotipo de la empresa">
     </a>
     <div class="nav-links">
+       <a href="#seccion1">Inicio</a>
         <a href="#seccion1">Trámites DGT</a>
         <a href="#seccion2">Herramientas</a>
         <a href="#seccion3">Cómo funciona</a>
@@ -104,10 +87,13 @@
   <div class="container">
     <!-- Sección informativa -->
     <div class="info-section">
-      <h2>Cambio de nombre de coche o moto 100% online</h2>
+      <h2>Cambio de titular de auto y
+        moto completamente online</h2>
       <p>
-        Tramita tu cambio de nombre con la mejor experiencia de comprar o vender un vehículo de segunda mano: 
-        sin papeleos, sin riesgos y súper rápido.
+        Rápido, fácil y cómodo
+        Cambiá el nombre de tu
+        vehículo, sin tediosos
+        papeleos y 100% conable.
       </p>
   
       <!-- Estrellas de calificación -->
@@ -119,13 +105,13 @@
         <i class="fas fa-star"></i>
       </div>
       <p style="font-size: 11px;">
-        TrustScore 4.4  504 opiniones
+     4.4  504 opiniones
       </p>
   
       <!-- Botón de atención al cliente -->
       <div class="contact">
         <a href="https://wa.me/tu-numero" target="_blank" class="contact-button">
-          Atención al cliente
+          Contáctanos
         </a>
         <a href="https://wa.me/tu-numero" target="_blank" class="whatsapp-link">
           <i class="fab fa-whatsapp"></i>
@@ -188,9 +174,9 @@
       
   
         <!-- Precio Contrato -->
-        <label for="precioContrato">Precio de Contrato (€)</label>
+        <label for="precioContrato">Precio de compraventa (€)</label>
        
-        <input type="number" id="precioContrato" name="precioContrato" placeholder="Precio de contrato (€)" required>
+        <input type="number" id="precioContrato" name="precioContrato" placeholder="Precio de compraventa (€)" required>
       </form>
       <button type="button" id="calcularPrecioBtn" class="pepe">Calcular precio</button>
     </div>
@@ -199,7 +185,7 @@
       <h2>Precio</h2>
       <form id="formPrecio">
         <div class="precio-detalles">
-          <p><strong>Cambio de nombre:</strong> <span id="total">151.85 €</span></p>
+          <p><strong>Cambio de nombre:</strong> <span id="totalCambio">129.85 €</span></p>
           <div id="resultadoPrecio" style="margin-top: 20px;"></div>
     
           <p><strong>Incluye:</strong></p>
@@ -216,8 +202,8 @@
             <li><span id="recomendacion1">12 €</span></li>
             <li><span id="recomendacion2">9.90 €</span></li>
           </ul>
-    
-          <p><strong>Total:</strong> <span id="totalCambio">151.85 €</span></p>
+          <p><strong>Total:</strong> <span id="total">129.95 €</span></p>
+        
         </div>
       </form>
     </div>
@@ -309,44 +295,53 @@
   <div class="header-background">
       <div class="header-item">
           <i class="fas fa-undo"></i>
-          <span>Garantía de devolución</span>
+          <span>Garantía de reembolso</span>
       </div>
       <div class="header-item">
           <i class="fas fa-truck"></i>
-          <span>Envío a toda la península</span>
+          <span>Envío a todo al país</span>
       </div>
       <div class="header-item">
           <i class="fas fa-headset"></i>
-          <span>Atención 24/7</span>
+          <span>Atención las 24 horas</span>
       </div>
       <div class="header-item">
           <i class="fas fa-clock"></i>
-          <span>Provisional al instante</span>
+          <span>Documento provisional
+            al instante</span>
       </div>
   </div>
   <h1  style="color: white;">Precio del cambio del titular de coche y moto</h1>
 <h2 style="color: white;font-size: 15px;text-align: center;margin-bottom: 50px;">
-  El precio de un cambio de nombre de un vehículo se configura sumando el coste de la transferencia más los impuestos asociados ITP</h2>
+  Costo de transferencia de titular de tu vehículo
 
+Para la cotización de las transferencia del titular del se incluye el precio de las transferencia y los impuestos de ITP
   <div class="prices">
       <div class="price-card">
       
-          <h3>¿Cuánto cuesta el cambio de nombre de un coche?</h3>
+          <h3>¿¿Cuál es el precio de
+            cambio de títular del auto?</h3>
           <div class="price">€129.95</div>
-          <p class="price-details">TODO INCLUIDO<br>Envío a domicilio incluido<br>Gestión del ITP incluida</p>
+          <p class="price-details">Paquete completo<br>Envío incluido<br>Incluye gestión de ITP</p>
       </div>
       <div class="price-card">
-          <h3>¿Cuánto cuesta el cambio de nombre de una moto?</h3>
+          <h3>¿Cuánto cuesta la cancelacion de Dominio</h3>
           <div class="price">€129.95</div>
-          <p class="price-details">TODO INCLUIDO<br>Envío a domicilio incluido<br>Gestión del ITP incluida</p>
+          <p class="price-details">Paquete completo<br>Envío incluido<br>Incluye gestión de ITP</p>
       </div>
       <div class="price-card">
-          <h3>¿Cuánto cuesta el cambio de nombre de un ciclomotor?</h3>
+          <h3>¿Cuánto cuesta el servicio de Etiqueta Ambiental DGT?</h3>
           <div class="price">€99.00</div>
-          <p class="price-details">TODO INCLUIDO<br>Envío a domicilio incluido<br>Gestión del ITP incluida</p>
+          <p class="price-details">Paquete completo<br>Envío incluido<br>Incluye gestión de ITP</p>
       </div>
+      <div class="price-card">
+        <h3>¿Cuánto cuesta el servicio de Duplicado de Carnet?</h3>
+        <div class="price">€99.00</div>
+        <p class="price-details">Paquete completo<br>Envío incluido<br>Incluye gestión de ITP</p>
+    </div>
   </div>
 </div>
+<script type="module" src="./tabla2.js"></script>
 <script type="module" src="./app.js"></script>
 <script type="module" src="./tabla.js"></script>
  

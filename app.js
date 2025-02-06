@@ -7,6 +7,62 @@ import { config } from "./config.js";
 // Referencia a la colección de vehículos
 const vehiculosCollection = collection(db, "Vehículo");
 
+// Coeficientes de depreciación para vehículos de turismo, todo terreno, quads, motocicletas
+const coeficientesDepreciacionVehiculos = [
+  { años: 1, coef: 0.84 },
+  { años: 2, coef: 0.67 },
+  { años: 3, coef: 0.56 },
+  { años: 4, coef: 0.47 },
+  { años: 5, coef: 0.39 },
+  { años: 6, coef: 0.34 },
+  { años: 7, coef: 0.28 },
+  { años: 8, coef: 0.24 },
+  { años: 9, coef: 0.19 },
+  { años: 10, coef: 0.17 }
+];
+
+// Coeficientes de depreciación para embarcaciones
+const coeficientesDepreciacionEmbarcaciones = [
+  { años: 1, coef: 1.0 },
+  { años: 2, coef: 0.95 },
+  { años: 3, coef: 0.89 },
+  { años: 4, coef: 0.78 },
+  { años: 5, coef: 0.70 },
+  { años: 6, coef: 0.60 },
+  { años: 7, coef: 0.55 },
+  { años: 8, coef: 0.40 },
+  { años: 9, coef: 0.38 },
+  { años: 10, coef: 0.35 },
+  { años: 11, coef: 0.30 },
+  { años: 12, coef: 0.25 },
+  { años: 13, coef: 0.20 },
+  { años: 14, coef: 0.15 },
+  { años: 15, coef: 0.10 }
+];
+
+// Coeficientes de comunidades autónomas
+const coeficientesComunidad = {
+  "Andalucía": 0.90,
+  "Aragón": 0.93,
+  "Asturias": 0.94,
+  "Islas Baleares": 0.96,
+  "Canarias": 0.85,
+  "Cantabria": 0.95,
+  "Castilla-La Mancha": 0.89,
+  "Castilla y León": 0.91,
+  "Cataluña": 0.95,
+  "Comunidad Valenciana": 0.88,
+  "Extremadura": 0.87,
+  "Galicia": 0.92,
+  "La Rioja": 0.90,
+  "Madrid": 1.0,
+  "Murcia": 0.89,
+  "Navarra": 1.0,
+  "País Vasco": 1.0,
+  "Ceuta": 0.80,
+  "Melilla": 0.80
+};
+
 // Función para listar vehículos
 async function listarVehiculos() {
   const tbody = document.getElementById("tablaVehiculos").querySelector("tbody");
@@ -34,57 +90,41 @@ async function listarVehiculos() {
   }
 }
 
-// Función para calcular la depreciación según la tabla de Hacienda
-function calcularDepreciacion(fechaMatriculacion) {
-  const hoy = new Date();
-  const anoMatriculacion = new Date(fechaMatriculacion).getFullYear();
-  const anosTranscurridos = hoy.getFullYear() - anoMatriculacion;
+// Función para calcular el valor venal de vehículos
+function calcularValorVenal(valorBase, fechaMatriculacion, comunidad) {
+  let añoActual = new Date().getFullYear();
+  let añoVehiculo = new Date(fechaMatriculacion).getFullYear();
+  let antigüedad = añoActual - añoVehiculo;
 
-  const tablaDepreciacion = [
-    { años: 1, porcentaje: 100 },
-    { años: 2, porcentaje: 84 },
-    { años: 3, porcentaje: 67 },
-    { años: 4, porcentaje: 56 },
-    { años: 5, porcentaje: 47 },
-    { años: 6, porcentaje: 39 },
-    { años: 7, porcentaje: 34 },
-    { años: 8, porcentaje: 28 },
-    { años: 9, porcentaje: 24 },
-    { años: 10, porcentaje: 19 },
-    { años: 11, porcentaje: 17 },
-    { años: 12, porcentaje: 13 },
-    { años: 13, porcentaje: 10 }
-  ];
+  let coefDepreciacion = coeficientesDepreciacionVehiculos.find(c => antigüedad >= c.años)?.coef || 0.17;
+  let coefComunidad = coeficientesComunidad[comunidad] || 1.0;
 
-  // Buscar el porcentaje de depreciación correspondiente
-  let porcentajeValorInicial = 10; // Mínimo después de 12 años
-  for (let i = 0; i < tablaDepreciacion.length; i++) {
-    if (anosTranscurridos < tablaDepreciacion[i].años) {
-      porcentajeValorInicial = tablaDepreciacion[i].porcentaje;
-      break;
-    }
-  }
-
-  return porcentajeValorInicial / 100; // Convertimos a decimal (ejemplo: 67% -> 0.67)
+  return valorBase * coefDepreciacion * coefComunidad;
 }
 
-// Función para calcular el ITP basado en el valor venal y el precio de contrato
+// Función para calcular el valor de embarcaciones
+function calcularValorEmbarcacion(valorBase, fechaMatriculacion) {
+  let añoActual = new Date().getFullYear();
+  let añoEmbarcacion = new Date(fechaMatriculacion).getFullYear();
+  let antigüedad = añoActual - añoEmbarcacion;
+
+  let coefDepreciacion = coeficientesDepreciacionEmbarcaciones.find(c => antigüedad >= c.años)?.coef || 0.10;
+
+  return valorBase * coefDepreciacion;
+}
+// Función para calcular el ITP
 function calcularITP(precioContrato, valorVenal, porcentajeITP) {
   const baseImponible = Math.max(precioContrato, valorVenal);
   return baseImponible * (porcentajeITP / 100);
 }
 
-// Función para calcular el precio con depreciación
+// Función para calcular el precio final
 async function calcularPrecio() {
   const fechaMatriculacion = document.getElementById("fechaMatriculacion").value;
   const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador").value;
-  const combustible = document.getElementById("combustible").value;
-  const correo = document.getElementById("correo").value;
-  const marca = document.getElementById("marca").value;
-  const modelo = document.getElementById("modelo").value;
   const precioContrato = parseFloat(document.getElementById("precioContrato").value);
 
-  if (!fechaMatriculacion || !comunidadAutonoma || !combustible || !correo || !marca || !modelo || isNaN(precioContrato)) {
+  if (!fechaMatriculacion || !comunidadAutonoma || isNaN(precioContrato)) {
     alert("Por favor, completa todos los campos antes de calcular el precio.");
     return;
   }
@@ -92,55 +132,45 @@ async function calcularPrecio() {
   const tasasDGT = 55.70;
   const gestion = 61.36;
   const iva = 12.89;
+  const valorVenalBase = 129.00;
 
-  const valorVenalBase = 35000; // Suponemos un valor venal inicial antes de depreciación
-
-  // Calcular depreciación basada en la fecha de matriculación
-  const factorDepreciacion = calcularDepreciacion(fechaMatriculacion);
-  const valorVenal = valorVenalBase * factorDepreciacion;
-
-  // Definir el porcentaje ITP según la Comunidad Autónoma (esto podría hacerse dinámicamente)
-  const porcentajeITP = 4; // Ejemplo: 4% ITP
-
-  // Calcular el ITP con el valor venal ajustado
+  const valorVenal = calcularValorVenal(valorVenalBase, fechaMatriculacion, comunidadAutonoma);
+  const porcentajeITP = 4;
   const impuesto = calcularITP(precioContrato, valorVenal, porcentajeITP);
+  // No incluimos precioContrato en el total
+  const total = tasasDGT + gestion + iva + impuesto;
 
-  // Calcular el total
-  const total = precioContrato + tasasDGT + gestion + iva + impuesto;
-
-  // Actualizar los valores en el DOM
   document.getElementById("tasasDGT").textContent = `${tasasDGT.toFixed(2)} €`;
   document.getElementById("gestion").textContent = `${gestion.toFixed(2)} €`;
   document.getElementById("iva").textContent = `${iva.toFixed(2)} €`;
   document.getElementById("impuesto").textContent = `${impuesto.toFixed(2)} €`;
   document.getElementById("total").textContent = `${total.toFixed(2)} €`;
-  document.getElementById("totalCambio").textContent = `${total.toFixed(2)} €`;
 
   showTab('precio');
 
-  // Guardar en Firebase
+  // Guardar en Firebase sin sumar el precio de contrato en el total
   const nuevoRegistro = {
     FechaMatriculacion: fechaMatriculacion,
     ComunidadAutonoma: comunidadAutonoma,
-    Combustible: combustible,
-    Correo: correo,
-    Marca: marca,
-    Modelo: modelo,
-    PrecioContrato: precioContrato,
+    PrecioContrato: precioContrato,  // Guardamos el precio de contrato
     ValorVenal: valorVenal,
     TasasDGT: tasasDGT,
     Gestion: gestion,
     IVA: iva,
     Impuesto: impuesto,
-    Total: total,
+    Total: total,  // Guardamos el total sin incluir el precio de contrato
+    Combustible: document.getElementById("combustible").value, // Nuevo campo Combustible
+    Correo: document.getElementById("correo").value, // Nuevo campo Correo
+    Marca: document.getElementById("marca").value, // Nuevo campo Marca
+    Modelo: document.getElementById("modelo").value // Nuevo campo Modelo
   };
 
   try {
     await addDoc(vehiculosCollection, nuevoRegistro);
-    alert("Precio y datos del vehículo guardados correctamente en Firebase");
+ ;
     listarVehiculos();
   } catch (error) {
-    console.error("Error al guardar el precio en Firebase:", error);
+  ;
   }
 }
 
@@ -152,7 +182,7 @@ document.addEventListener("DOMContentLoaded", listarVehiculos);
 function showTab(tabId) {
   document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active-tab'));
   document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-
   document.getElementById(tabId).classList.add('active-tab');
   document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
 }
+

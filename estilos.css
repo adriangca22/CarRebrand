@@ -47,7 +47,7 @@ body {
 
     border-radius: 4px;
     font-size: 14px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  
 }
 
 .card-form input:focus, .card-form select:focus {
@@ -117,7 +117,7 @@ body {
     padding: 20px 15px;
     color: #000; /* Texto negro */
     background-color: #ffffff; /* Fondo blanco */
-    border: 1px solid #ccc; /* Borde gris */
+    /* Borde gris */
     cursor: pointer;
     font-size: 16px;
     border-radius: 10px 10px 0 0;
@@ -1017,7 +1017,7 @@ margin-top: 10px;
   width: calc(100% - 16px); /* Ajusta el ancho relativo */
   padding: 10px; /* Aumenta el relleno interno */
   margin-bottom: 10px; /* Ajusta el margen inferior */
-  border: 1px solid #ccc;
+ 
   border-radius: 4px;
   font-size: 14px; 
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
