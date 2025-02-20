@@ -706,19 +706,36 @@ input:focus {
 
 /* Tarjetas de precio */
 .price-card {
-  flex: 1 1 calc(22% - 15px); /* Cuatro tarjetas por fila con más espacio */
-  max-width: calc(22% - 15px);
-  background: linear-gradient(145deg, #e6e6e6, #ffffff); /* Fondo con profundidad */
-  border: 1px solid #ddd;
+  background: white;
+  padding: 20px;
   border-radius: 10px;
   text-align: center;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-  margin-bottom: 30px; /* Espacio vacío hacia abajo */
-  cursor: pointer;
+  width: 250px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px; /* Ajusta según necesites */
 }
+
+.price-button {
+  background-color: #5e2c2c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: auto; /* Asegura que el botón siempre quede alineado abajo */
+  display: flex;
+  justify-content: center;
+}
+
+.price-button:hover {
+  background-color: #4a2222;
+}
+
 
 .price-card:hover {
   transform: translateY(-10px);
@@ -803,6 +820,20 @@ input:focus {
     flex-wrap: wrap;
   }
 
+  .price-button {
+    background-color: #5e2c2c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.price-button:hover {
+    background-color: #4a2222;
+}
   .price-card {
     flex: 1 1 40%; /* Dos tarjetas por fila en pantallas medianas */
     max-width: 40%;
