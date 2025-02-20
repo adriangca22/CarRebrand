@@ -706,45 +706,47 @@ input:focus {
 
 /* Tarjetas de precio */
 .price-card {
-  flex: 1 1 calc(33.333% - 20px); /* Tres tarjetas por fila con espacio entre ellas */
-  max-width: calc(33.333% - 20px);
+  flex: 1 1 calc(22% - 15px); /* Cuatro tarjetas por fila con más espacio */
+  max-width: calc(22% - 15px);
   background: linear-gradient(145deg, #e6e6e6, #ffffff); /* Fondo con profundidad */
   border: 1px solid #ddd;
   border-radius: 10px;
   text-align: center;
-  padding: 20px;
+  padding: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
+  margin-bottom: 30px; /* Espacio vacío hacia abajo */
+  cursor: pointer;
 }
 
 .price-card:hover {
-  transform: translateY(-10px); /* Eleva la tarjeta */
-  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3), -12px -12px 20px rgba(0, 0, 0, 0.8); /* Sombra más intensa */
+  transform: translateY(-10px);
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3), -12px -12px 20px rgba(0, 0, 0, 0.8);
 }
 
 /* Títulos de las tarjetas */
 .price-card h3 {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   color: #333;
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-weight: bold;
 }
 
 /* Precio destacado */
 .price {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
-  margin: 15px 0;
-  color: #723737 ;
+  margin: 10px 0;
+  color: #723737;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Detalles de precios */
 .price-details {
   color: #555;
-  font-size: 16px;
-  margin-bottom: 15px;
+  font-size: 14px;
+  margin-bottom: 10px;
   line-height: 1.5;
 }
 
@@ -755,37 +757,42 @@ input:focus {
 }
 
 .price-card .price-details ul li {
-  margin: 10px 0;
+  margin: 8px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  color: #723737 ;
+  gap: 8px;
+  color: #723737;
   font-weight: 500;
 }
 
+/* Iconos */
 .price-card .price-details ul li i {
   font-size: 18px;
-  color: #723737 ;
+  color: #7a3b3b; /* Ajustado para coincidir con los colores del diseño */
 }
 
 /* Botón dentro de la tarjeta */
 .price-card button {
-  margin-top: 20px;
+  margin-top: 15px;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   color: #fff;
-  background-color: #7a3b3b ;
+  background-color: #7a3b3b;
   border: none;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
+.price-card .price-details ul li i {
+  font-size: 18px;
+  color: #5e2c2c; /* Color actualizado para los iconos */
+}
 
 .price-card button:hover {
-  background-color: #7a3b3b ;
+  background-color: #5e2c2c;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
@@ -793,26 +800,27 @@ input:focus {
 /* Responsividad */
 @media (max-width: 1024px) {
   .prices {
-    flex-wrap: wrap; /* Permite que las tarjetas bajen de fila */
+    flex-wrap: wrap;
   }
 
   .price-card {
-    flex: 1 1 45%; /* Dos tarjetas por fila en pantallas medianas */
-    max-width: 45%;
+    flex: 1 1 40%; /* Dos tarjetas por fila en pantallas medianas */
+    max-width: 40%;
   }
 }
 
 @media (max-width: 768px) {
   .prices {
-    flex-direction: column; /* Tarjetas en una sola columna */
-    gap: 15px; /* Ajusta el espacio entre tarjetas */
+    flex-direction: column;
+    gap: 10px;
   }
 
   .price-card {
-    flex: 1 1 100%; /* Ocupan todo el ancho en pantallas pequeñas */
+    flex: 1 1 100%;
     max-width: 100%;
   }
 }
+
 
   body {
             font-family: Arial, sans-serif;
@@ -838,7 +846,7 @@ input:focus {
         width: 100%; /* Asegura que ocupe todo el ancho */
         position: relative; /* Ajusta el comportamiento dentro del flujo */
         margin-bottom: 30px;
-        margin-top: 50px; /* Reduce el espacio superior */
+        margin-top: -20px; /* Reduce el espacio superior */
       }
       
 .header-item {
@@ -869,19 +877,19 @@ input:focus {
 }
 
 .nav-links a {
-  color: rgb(56, 54, 54);
+  color: rgb(54, 18, 18);
   padding-inline: 20px;
   text-decoration: none;
-  font-size: 14px; /* Tamaño ligeramente mayor */
+  font-size: 15px; /* Tamaño ligeramente mayor */
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: 350; /* Cambiado a semibold */
-  transition: color 0.3s;
+  font-weight: 450; /* Cambiado a semibold */
+  transition: color 0.1s;
 }
 
 .nav-links a:hover {
   color: #502626; /* Color del texto */
  
-  transform: scale(1.1); /* Aumenta el tamaño del texto */
+  transform: scale(1.2); /* Aumenta el tamaño del texto */
  
 }
 
