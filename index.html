@@ -303,12 +303,7 @@
 </h2>
 
 <div class="prices">
-    <div class="price-card">
-        <i class="fas fa-file-signature icon" style="color: #5e2c2c; font-size: 24px;"></i>
-        <h3>Servicio cambio de titular del auto</h3>
-        <p class="price-details">Paquete completo<br>Envío incluido<br>Incluye gestión de ITP</p>
-        <button class="price-button" onclick="window.open('https://tu-enlace.com/servicio-cambio-titular', '_blank')">Más info</button>
-    </div>
+    
     
     <div class="price-card">
         <i class="fas fa-ban icon" style="color: #5e2c2c; font-size: 24px;"></i>
@@ -373,8 +368,17 @@
 
   // Función para inicializar autocompletados
 
- 
+ // script.js
+document.addEventListener("DOMContentLoaded", function () {
+  const hamburgerButton = document.getElementById("hamburger-button");
+  const navLinksContainer = document.querySelector(".nav-links-container");
+
+  hamburgerButton.addEventListener("click", function () {
+    navLinksContainer.classList.toggle("active");
+  });
+});
 </script>
+
     <!-- Script de Zoho SalesIQ -->
     <script>
       window.$zoho = window.$zoho || {};
