@@ -212,20 +212,39 @@
             <li><span>Gestión:</span> <span id="gestion">61.36 €</span></li>
             <li><span>IVA:</span> <span id="iva">12.89 €</span></li>
             <li><span>Envío a domicilio:</span> <span id="envio">Gratuito</span></li>
-            <li><span>Impuesto de transmisiones +info:</span> <span id="impuesto">0 €</span></li>
+            <li>
+              <span>Impuesto de transmisiones</span> 
+              <a href="#" id="mostrarInfo">+info</a>: 
+              <span id="impuesto">0 €</span>
+            </li>
           </ul>
-    
+          
           <p><strong>Te recomendamos añadir:</strong></p>
           <ul>
             <li><span id="recomendacion1">12 €</span></li>
             <li><span id="recomendacion2">9.90 €</span></li>
           </ul>
           <p><strong>Total:</strong> <span id="total">129.95 €</span></p>
-        
         </div>
       </form>
     </div>
-
+    
+    <!-- Modal -->
+    <div id="modalInfo" class="modal">
+      <div class="modal-content">
+        <span class="close" id="cerrarModal">&times;</span>
+        <h3>Impuesto de transmisiones</h3>
+        <p>El Impuesto sobre Transmisiones Patrimoniales (ITP) es un tributo que el comprador debe abonar a Hacienda en los cambios de titular de un vehículo entre particulares.</p>
+        <p>Se calcula aplicando un porcentaje, que varía según la comunidad autónoma del comprador, al valor más alto entre el precio acordado de compraventa y el valor venal del vehículo según las tablas de Hacienda.</p>
+        <h4>Cálculo del impuesto</h4>
+        <ul>
+          <li>Valoración tablas hacienda: <span id="valorHacienda">16200 €</span></li>
+          <li>Porcentaje de depreciación: <span id="depreciacion">34 %</span></li>
+          <li>Valor fiscal: <span id="valorFiscal">0.00 €</span></li>
+          <li>ITP calculado: <span id="itpCalculado">0.00 €</span></li>
+        </ul>
+      </div>
+    </div>
     <div id="pago" class="tab-content">
       <h2>Pago</h2>
       <form id="formPago">
@@ -290,7 +309,23 @@
       </div>
     </div>
 
-  
+  <div class="card-table">
+      <h2>Listado de Vehículos</h2>
+      <table id="tablaVehiculos">
+        <thead>
+          <tr>
+            <th>Fecha de Matriculación</th>
+            <th>Comunidad Autónoma</th>
+            <th>Combustible</th>
+            <th>Correo</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 </header>
 
 

@@ -9,35 +9,19 @@ const vehiculosCollection = collection(db, "Vehículo");
 
 // Coeficientes de depreciación para vehículos de turismo, todo terreno, quads, motocicletas
 const coeficientesDepreciacionVehiculos = [
-  { años: 1, coef: 0.84 },
-  { años: 2, coef: 0.67 },
-  { años: 3, coef: 0.56 },
-  { años: 4, coef: 0.47 },
-  { años: 5, coef: 0.39 },
-  { años: 6, coef: 0.34 },
-  { años: 7, coef: 0.28 },
-  { años: 8, coef: 0.24 },
-  { años: 9, coef: 0.19 },
-  { años: 10, coef: 0.17 }
-];
-
-// Coeficientes de depreciación para embarcaciones
-const coeficientesDepreciacionEmbarcaciones = [
-  { años: 1, coef: 1.0 },
-  { años: 2, coef: 0.95 },
-  { años: 3, coef: 0.89 },
-  { años: 4, coef: 0.78 },
-  { años: 5, coef: 0.70 },
-  { años: 6, coef: 0.60 },
-  { años: 7, coef: 0.55 },
-  { años: 8, coef: 0.40 },
-  { años: 9, coef: 0.38 },
-  { años: 10, coef: 0.35 },
-  { años: 11, coef: 0.30 },
-  { años: 12, coef: 0.25 },
-  { años: 13, coef: 0.20 },
-  { años: 14, coef: 0.15 },
-  { años: 15, coef: 0.10 }
+  { años: 1, coef: 1.0 }, // 100%
+  { años: 2, coef: 0.84 }, // 84%
+  { años: 3, coef: 0.67 }, // 67%
+  { años: 4, coef: 0.56 }, // 56%
+  { años: 5, coef: 0.47 }, // 47%
+  { años: 6, coef: 0.39 }, // 39%
+  { años: 7, coef: 0.34 }, // 34%
+  { años: 8, coef: 0.28 }, // 28%
+  { años: 9, coef: 0.24 }, // 24%
+  { años: 10, coef: 0.19 }, // 19%
+  { años: 11, coef: 0.17 }, // 17%
+  { años: 12, coef: 0.13 }, // 13%
+  { años: Infinity, coef: 0.10 } // 10% para más de 12 años
 ];
 
 // Coeficientes de comunidades autónomas
@@ -96,26 +80,35 @@ function calcularValorVenal(valorBase, fechaMatriculacion, comunidad) {
   let añoVehiculo = new Date(fechaMatriculacion).getFullYear();
   let antigüedad = añoActual - añoVehiculo;
 
-  let coefDepreciacion = coeficientesDepreciacionVehiculos.find(c => antigüedad >= c.años)?.coef || 0.17;
+  // Obtener el coeficiente de depreciación según la antigüedad
+  let coefDepreciacion = coeficientesDepreciacionVehiculos.find(c => antigüedad >= c.años)?.coef || 0.10;
+
+  // Obtener el coeficiente de la comunidad autónoma
   let coefComunidad = coeficientesComunidad[comunidad] || 1.0;
 
+  // Calcular el valor venal
   return valorBase * coefDepreciacion * coefComunidad;
 }
 
-// Función para calcular el valor de embarcaciones
-function calcularValorEmbarcacion(valorBase, fechaMatriculacion) {
-  let añoActual = new Date().getFullYear();
-  let añoEmbarcacion = new Date(fechaMatriculacion).getFullYear();
-  let antigüedad = añoActual - añoEmbarcacion;
-
-  let coefDepreciacion = coeficientesDepreciacionEmbarcaciones.find(c => antigüedad >= c.años)?.coef || 0.10;
-
-  return valorBase * coefDepreciacion;
-}
 // Función para calcular el ITP
-function calcularITP(precioContrato, valorVenal, porcentajeITP) {
-  const baseImponible = Math.max(precioContrato, valorVenal);
-  return baseImponible * (porcentajeITP / 100);
+function calcularITP(valorVenal, porcentajeITP) {
+  return valorVenal * (porcentajeITP / 100);
+}
+
+// Función para actualizar los valores en el modal
+function actualizarModal(valorHacienda, depreciacion, valorFiscal, itp) {
+  if (document.getElementById("valorHacienda")) {
+    document.getElementById("valorHacienda").textContent = `${valorHacienda.toFixed(2)} €`;
+  }
+  if (document.getElementById("depreciacion")) {
+    document.getElementById("depreciacion").textContent = `${(depreciacion * 100).toFixed(0)} %`;
+  }
+  if (document.getElementById("valorFiscal")) {
+    document.getElementById("valorFiscal").textContent = `${valorFiscal.toFixed(2)} €`;
+  }
+  if (document.getElementById("itpCalculado")) {
+    document.getElementById("itpCalculado").textContent = `${itp.toFixed(2)} €`;
+  }
 }
 
 // Función para calcular el precio final
@@ -129,49 +122,40 @@ async function calcularPrecio() {
     return;
   }
 
+  // Valor base de Hacienda específico para el modelo Abarth 124 Spider TB Multiair 6V
+  const valorBaseHacienda = 32800; // Valor de tablas de Hacienda para el modelo específico
+
+  // Calcular la antigüedad
+  const antigüedad = new Date().getFullYear() - new Date(fechaMatriculacion).getFullYear();
+
+  // Obtener el coeficiente de depreciación según la antigüedad
+  const depreciacion = coeficientesDepreciacionVehiculos.find(c => antigüedad >= c.años)?.coef || 0.10;
+
+  // Calcular el valor fiscal
+  const valorFiscal = valorBaseHacienda * depreciacion;
+
+  // Calcular el ITP (4% sobre el valor más alto entre el precio de compraventa y el valor fiscal)
+  const porcentajeITP = 4;
+  const baseITP = Math.max(precioContrato, valorFiscal); // Usar el valor más alto
+  const impuesto = calcularITP(baseITP, porcentajeITP);
+
+  // Calcular el total (sin incluir el precio de contrato)
   const tasasDGT = 55.70;
   const gestion = 61.36;
   const iva = 12.89;
-  const valorVenalBase = 129.00;
-
-  const valorVenal = calcularValorVenal(valorVenalBase, fechaMatriculacion, comunidadAutonoma);
-  const porcentajeITP = 4;
-  const impuesto = calcularITP(precioContrato, valorVenal, porcentajeITP);
-  // No incluimos precioContrato en el total
   const total = tasasDGT + gestion + iva + impuesto;
 
+  // Mostrar resultados en la interfaz
   document.getElementById("tasasDGT").textContent = `${tasasDGT.toFixed(2)} €`;
   document.getElementById("gestion").textContent = `${gestion.toFixed(2)} €`;
   document.getElementById("iva").textContent = `${iva.toFixed(2)} €`;
   document.getElementById("impuesto").textContent = `${impuesto.toFixed(2)} €`;
   document.getElementById("total").textContent = `${total.toFixed(2)} €`;
 
+  // Actualizar el modal con los valores calculados
+  actualizarModal(valorBaseHacienda, depreciacion, valorFiscal, impuesto);
+
   showTab('precio');
-
-  // Guardar en Firebase sin sumar el precio de contrato en el total
-  const nuevoRegistro = {
-    FechaMatriculacion: fechaMatriculacion,
-    ComunidadAutonoma: comunidadAutonoma,
-    PrecioContrato: precioContrato,  // Guardamos el precio de contrato
-    ValorVenal: valorVenal,
-    TasasDGT: tasasDGT,
-    Gestion: gestion,
-    IVA: iva,
-    Impuesto: impuesto,
-    Total: total,  // Guardamos el total sin incluir el precio de contrato
-    Combustible: document.getElementById("combustible").value, // Nuevo campo Combustible
-    Correo: document.getElementById("correo").value, // Nuevo campo Correo
-    Marca: document.getElementById("marca").value, // Nuevo campo Marca
-    Modelo: document.getElementById("modelo").value // Nuevo campo Modelo
-  };
-
-  try {
-    await addDoc(vehiculosCollection, nuevoRegistro);
- ;
-    listarVehiculos();
-  } catch (error) {
-  ;
-  }
 }
 
 // Asociar eventos a botones y formularios
@@ -186,3 +170,21 @@ function showTab(tabId) {
   document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
 }
 
+// Mostrar modal al hacer clic en "+info"
+document.getElementById("mostrarInfo").addEventListener("click", function(event) {
+  event.preventDefault();
+  calcularPrecio(); // Asegura que se calculen los valores antes de abrir el modal
+  document.getElementById("modalInfo").style.display = "block";
+});
+
+// Cerrar modal al hacer clic en la "X"
+document.getElementById("cerrarModal").addEventListener("click", function() {
+  document.getElementById("modalInfo").style.display = "none";
+});
+
+// Cerrar modal al hacer clic fuera del contenido
+window.onclick = function(event) {
+  if (event.target == document.getElementById("modalInfo")) {
+    document.getElementById("modalInfo").style.display = "none";
+  }
+};
