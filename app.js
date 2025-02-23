@@ -1,8 +1,6 @@
 // Importa las funciones necesarias desde Firebase y otros módulos
 import { app, db } from "./firebase.js"; // Asegúrate de que en firebase.js esté correctamente inicializado Firebase
 import { collection, getDocs, addDoc } from "firebase/firestore";
-import { listarPagosPorUsuario, iniciarPago } from "./pagos.js";
-import { config } from "./config.js";
 
 // Referencia a la colección de vehículos
 const vehiculosCollection = collection(db, "Vehículo");
@@ -111,7 +109,7 @@ function actualizarModal(valorHacienda, depreciacion, valorFiscal, itp) {
   }
 }
 
-// Función para calcular el precio final
+// Función para calcular el precio final y enviar datos a Firebase
 async function calcularPrecio() {
   const fechaMatriculacion = document.getElementById("fechaMatriculacion").value;
   const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador").value;
@@ -154,6 +152,26 @@ async function calcularPrecio() {
 
   // Actualizar el modal con los valores calculados
   actualizarModal(valorBaseHacienda, depreciacion, valorFiscal, impuesto);
+
+  // Guardar los datos en Firebase
+  const nuevoRegistro = {
+    FechaMatriculacion: fechaMatriculacion,
+    ComunidadAutonoma: comunidadAutonoma,
+    PrecioContrato: precioContrato,
+    ValorFiscal: valorFiscal,
+    ITP: impuesto,
+    Total: total,
+    FechaRegistro: new Date().toISOString()
+  };
+
+  try {
+    await addDoc(vehiculosCollection, nuevoRegistro);
+    alert("Datos guardados correctamente en Firebase.");
+    listarVehiculos(); // Actualizar la tabla después de guardar
+  } catch (error) {
+    console.error("Error al guardar en Firebase:", error);
+    alert("Hubo un error al guardar los datos. Por favor, intenta nuevamente.");
+  }
 
   showTab('precio');
 }
