@@ -7,10 +7,50 @@ import { config } from "./config.js";
 // Referencia a la colección de vehículos
 const vehiculosCollection = collection(db, "Vehículo");
 
+// Coeficientes de depreciación para vehículos de turismo, todo terreno, quads, motocicletas
+const coeficientesDepreciacionVehiculos = [
+  { años: 1, coef: 1.0 }, // 100%
+  { años: 2, coef: 0.84 }, // 84%
+  { años: 3, coef: 0.67 }, // 67%
+  { años: 4, coef: 0.56 }, // 56%
+  { años: 5, coef: 0.47 }, // 47%
+  { años: 6, coef: 0.39 }, // 39%
+  { años: 7, coef: 0.34 }, // 34%
+  { años: 8, coef: 0.28 }, // 28%
+  { años: 9, coef: 0.24 }, // 24%
+  { años: 10, coef: 0.19 }, // 19%
+  { años: 11, coef: 0.17 }, // 17%
+  { años: 12, coef: 0.13 }, // 13%
+  { años: Infinity, coef: 0.10 } // 10% para más de 12 años
+];
+
+// Coeficientes de comunidades autónomas
+const coeficientesComunidad = {
+  "Andalucía": 0.90,
+  "Aragón": 0.93,
+  "Asturias": 0.94,
+  "Islas Baleares": 0.96,
+  "Canarias": 0.85,
+  "Cantabria": 0.95,
+  "Castilla-La Mancha": 0.89,
+  "Castilla y León": 0.91,
+  "Cataluña": 0.95,
+  "Comunidad Valenciana": 0.88,
+  "Extremadura": 0.87,
+  "Galicia": 0.92,
+  "La Rioja": 0.90,
+  "Madrid": 1.0,
+  "Murcia": 0.89,
+  "Navarra": 1.0,
+  "País Vasco": 1.0,
+  "Ceuta": 0.80,
+  "Melilla": 0.80
+};
+
 // Función para listar vehículos
 async function listarVehiculos() {
   const tbody = document.getElementById("tablaVehiculos").querySelector("tbody");
-  tbody.innerHTML = ""; // Limpia la tabla antes de rellenarla
+  tbody.innerHTML = "";
 
   try {
     const querySnapshot = await getDocs(vehiculosCollection);
@@ -34,158 +74,117 @@ async function listarVehiculos() {
   }
 }
 
-// Función para agregar un vehículo
-async function agregarVehiculo(event) {
-  event.preventDefault();
+// Función para calcular el valor venal de vehículos
+function calcularValorVenal(valorBase, fechaMatriculacion, comunidad) {
+  let añoActual = new Date().getFullYear();
+  let añoVehiculo = new Date(fechaMatriculacion).getFullYear();
+  let antigüedad = añoActual - añoVehiculo;
 
-  const nuevoVehiculo = {
-    FechaMatriculacion: document.getElementById("fechaMatriculacion").value,
-    ComunidadAutonoma: document.getElementById("comunidadAutonomaComprador").value,
-    Combustible: document.getElementById("combustible").value,
-    Correo: document.getElementById("correo").value,
-    Marca: document.getElementById("marca").value,
-    Modelo: document.getElementById("modelo").value,
-    PrecioContrato: parseFloat(document.getElementById("precioContrato").value),
-  };
+  // Obtener el coeficiente de depreciación según la antigüedad
+  let coefDepreciacion = coeficientesDepreciacionVehiculos.find(c => antigüedad >= c.años)?.coef || 0.10;
 
-  try {
-    await addDoc(vehiculosCollection, nuevoVehiculo);
-    alert("Vehículo agregado correctamente");
-    listarVehiculos();
-  } catch (error) {
-    console.error("Error al agregar el vehículo:", error);
+  // Obtener el coeficiente de la comunidad autónoma
+  let coefComunidad = coeficientesComunidad[comunidad] || 1.0;
+
+  // Calcular el valor venal
+  return valorBase * coefDepreciacion * coefComunidad;
+}
+
+// Función para calcular el ITP
+function calcularITP(valorVenal, porcentajeITP) {
+  return valorVenal * (porcentajeITP / 100);
+}
+
+// Función para actualizar los valores en el modal
+function actualizarModal(valorHacienda, depreciacion, valorFiscal, itp) {
+  if (document.getElementById("valorHacienda")) {
+    document.getElementById("valorHacienda").textContent = `${valorHacienda.toFixed(2)} €`;
+  }
+  if (document.getElementById("depreciacion")) {
+    document.getElementById("depreciacion").textContent = `${(depreciacion * 100).toFixed(0)} %`;
+  }
+  if (document.getElementById("valorFiscal")) {
+    document.getElementById("valorFiscal").textContent = `${valorFiscal.toFixed(2)} €`;
+  }
+  if (document.getElementById("itpCalculado")) {
+    document.getElementById("itpCalculado").textContent = `${itp.toFixed(2)} €`;
   }
 }
 
-
-
- // Función para calcular el precio y agregarlo a Firebase junto con los datos del vehículo
+// Función para calcular el precio final
 async function calcularPrecio() {
   const fechaMatriculacion = document.getElementById("fechaMatriculacion").value;
   const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador").value;
-  const combustible = document.getElementById("combustible").value;
-  const correo = document.getElementById("correo").value;
-  const marca = document.getElementById("marca").value;
-  const modelo = document.getElementById("modelo").value;
   const precioContrato = parseFloat(document.getElementById("precioContrato").value);
 
-  if (!fechaMatriculacion || !comunidadAutonoma || !combustible || !correo || !marca || !modelo || isNaN(precioContrato)) {
+  if (!fechaMatriculacion || !comunidadAutonoma || isNaN(precioContrato)) {
     alert("Por favor, completa todos los campos antes de calcular el precio.");
     return;
   }
 
-  const tasasDGT = 55.70; // Valor fijo
-  const gestion = 61.36; // Valor fijo
-  const iva = (precioContrato + tasasDGT + gestion) * 0.21; // 21% de IVA
+  // Valor base de Hacienda específico para el modelo Abarth 124 Spider TB Multiair 6V
+  const valorBaseHacienda = 32800; // Valor de tablas de Hacienda para el modelo específico
 
-  // Calcular años de antigüedad del vehículo
-  const fechaActual = new Date();
-  const fechaMatriculacionDate = new Date(fechaMatriculacion);
-  const antigüedad = fechaActual.getFullYear() - fechaMatriculacionDate.getFullYear();
-  if (fechaMatriculacionDate > fechaActual) {
-    alert("La fecha de matriculación no puede ser futura.");
-    return;
-  }
+  // Calcular la antigüedad
+  const antigüedad = new Date().getFullYear() - new Date(fechaMatriculacion).getFullYear();
 
-  // Ajustar el impuesto dependiendo de la antigüedad
-  let impuesto;
-  if (antigüedad > 10) {
-    impuesto = precioContrato * 0.03; // 3% si tiene más de 10 años
-  } else if (antigüedad > 5) {
-    impuesto = precioContrato * 0.05; // 5% si tiene entre 5 y 10 años
-  } else {
-    impuesto = precioContrato * 0.07; // 7% si tiene menos de 5 años
-  }
+  // Obtener el coeficiente de depreciación según la antigüedad
+  const depreciacion = coeficientesDepreciacionVehiculos.find(c => antigüedad >= c.años)?.coef || 0.10;
 
-  const total = precioContrato + tasasDGT + gestion + iva + impuesto;
+  // Calcular el valor fiscal
+  const valorFiscal = valorBaseHacienda * depreciacion;
 
-  // Actualizar los valores en el DOM
+  // Calcular el ITP (4% sobre el valor más alto entre el precio de compraventa y el valor fiscal)
+  const porcentajeITP = 4;
+  const baseITP = Math.max(precioContrato, valorFiscal); // Usar el valor más alto
+  const impuesto = calcularITP(baseITP, porcentajeITP);
+
+  // Calcular el total (sin incluir el precio de contrato)
+  const tasasDGT = 55.70;
+  const gestion = 61.36;
+  const iva = 12.89;
+  const total = tasasDGT + gestion + iva + impuesto;
+
+  // Mostrar resultados en la interfaz
   document.getElementById("tasasDGT").textContent = `${tasasDGT.toFixed(2)} €`;
   document.getElementById("gestion").textContent = `${gestion.toFixed(2)} €`;
   document.getElementById("iva").textContent = `${iva.toFixed(2)} €`;
   document.getElementById("impuesto").textContent = `${impuesto.toFixed(2)} €`;
   document.getElementById("total").textContent = `${total.toFixed(2)} €`;
 
-  // Cambiar a la pestaña "Precio"
+  // Actualizar el modal con los valores calculados
+  actualizarModal(valorBaseHacienda, depreciacion, valorFiscal, impuesto);
+
   showTab('precio');
-
-  // Guardar los datos del vehículo y el cálculo del precio en Firebase
-  const nuevoRegistro = {
-    FechaMatriculacion: fechaMatriculacion,
-    ComunidadAutonoma: comunidadAutonoma,
-    Combustible: combustible,
-    Correo: correo,
-    Marca: marca,
-    Modelo: modelo,
-    PrecioContrato: precioContrato,
-    TasasDGT: tasasDGT,
-    Gestion: gestion,
-    IVA: iva,
-    Impuesto: impuesto,
-    Total: total,
-  };
-
-  try {
-    await addDoc(vehiculosCollection, nuevoRegistro);
-    alert("Precio y datos del vehículo guardados correctamente en Firebase");
-    listarVehiculos();
-  } catch (error) {
-    console.error("Error al guardar el precio en Firebase:", error);
-  }
-}
-
-
-// Función principal para inicializar la aplicación
-function initApp() {
-  console.log("Iniciando aplicación...");
-
-  // Inicializar secciones principales
-  listarVehiculos();
-
-  // Manejo de eventos para pagos
-  document.getElementById("iniciarPagoBtn").addEventListener("click", () => {
-    const transaccionId = document.getElementById("transaccionId").value;
-    const monto = parseFloat(document.getElementById("monto").value);
-    const metodoPago = document.getElementById("metodoPago").value;
-    const usuarioId = config.usuarioId; // Usamos un valor global desde config.js
-
-    if (!transaccionId || isNaN(monto) || !metodoPago) {
-      alert("Por favor, completa todos los campos de pago.");
-      return;
-    }
-
-    iniciarPago(transaccionId, monto, metodoPago, usuarioId)
-      .then((pagoId) => alert(`Pago iniciado correctamente. ID: ${pagoId}`))
-      .catch((error) => alert(`Error al iniciar el pago: ${error.message}`));
-  });
-
-  // Mostrar los pagos del usuario
-  listarPagosPorUsuario(config.usuarioId)
-    .then((pagos) => console.log("Pagos del usuario:", pagos))
-    .catch((error) => console.error("Error al listar pagos:", error));
 }
 
 // Asociar eventos a botones y formularios
-document.getElementById("formVehiculo").addEventListener("submit", (event) => {
-  event.preventDefault();
-  agregarVehiculo(event);
-});
-
 document.getElementById("calcularPrecioBtn").addEventListener("click", calcularPrecio);
+document.addEventListener("DOMContentLoaded", listarVehiculos);
 
 // Función para cambiar de pestañas
 function showTab(tabId) {
-  const tabs = document.querySelectorAll('.tab-content');
-  const buttons = document.querySelectorAll('.tab-button');
-
-  tabs.forEach(tab => tab.classList.remove('active-tab'));
-  buttons.forEach(button => button.classList.remove('active'));
-
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active-tab'));
+  document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
   document.getElementById(tabId).classList.add('active-tab');
   document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
 }
 
-// Inicializar la aplicación al cargar la página
-document.addEventListener("DOMContentLoaded", initApp);
+// Mostrar modal al hacer clic en "+info"
+document.getElementById("mostrarInfo").addEventListener("click", function(event) {
+  event.preventDefault();
+  calcularPrecio(); // Asegura que se calculen los valores antes de abrir el modal
+  document.getElementById("modalInfo").style.display = "block";
+});
 
-// Opciones de autocompletado al cargar     js.
+// Cerrar modal al hacer clic en la "X"
+document.getElementById("cerrarModal").addEventListener("click", function() {
+  document.getElementById("modalInfo").style.display = "none";
+});
+
+// Cerrar modal al hacer clic fuera del contenido
+window.onclick = function(event) {
+  if (event.target == document.getElementById("modalInfo")) {
+    document.getElementById("modalInfo").style.display = "none";
+  }
+};
