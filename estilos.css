@@ -295,94 +295,176 @@ body {
   }
 }
 
-
 /* Estilos para la sección de documentos */
 #documentos {
   background-color: #f7f8fa;
-  padding: 15px; /* Aumentar el espaciado interno */
-  border-radius: 6px; /* Bordes ligeramente más redondeados */
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Sombra ligeramente más pronunciada */
-  max-width: 450px; /* Aumentar el ancho máximo */
-  margin: 15px auto; /* Centrar horizontalmente */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
 }
 
 /* Título del encabezado */
 #documentos h2 {
-  font-size: 18px; /* Aumentar tamaño del título */
-  margin-bottom: 12px; /* Aumentar espaciado inferior */
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
 }
 
 /* Párrafos */
 #documentos p {
-  font-size: 14px; /* Aumentar tamaño de texto */
-  line-height: 1.6; /* Aumentar la altura de línea */
-  margin-bottom: 10px; /* Aumentar margen inferior */
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  color: #555;
 }
 
 /* Lista de elementos */
 #documentos ul {
   list-style-type: disc;
-  margin-left: 20px; /* Aumentar el margen izquierdo */
+  margin-left: 25px;
 }
 
 #documentos ul li {
-  font-size: 14px; /* Aumentar tamaño de texto */
+  font-size: 14px;
   color: #555;
-  margin-bottom: 6px; /* Aumentar espacio entre elementos */
+  margin-bottom: 8px;
+}
+
+/* Área de carga de archivos */
+.drop-area {
+  border: 2px dashed #7a3b3b;
+  padding: 20px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 6px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.drop-area:hover {
+  background-color: #f0e6e6;
+}
+
+/* Ocultar el input de archivos */
+#fileInput {
+  display: none;
+}
+
+/* Barra de progreso */
+#progressContainer {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+#progressBar {
+  width: 0%;
+  height: 5px;
+  background-color: green;
+  transition: width 0.4s ease;
+}
+
+/* Lista de archivos subidos */
+#fileList {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+#fileList li {
+  background-color: #f7f7f7;
+  padding: 8px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#fileList li span {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Botón eliminar archivo */
+.delete-file {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.delete-file:hover {
+  color: darkred;
 }
 
 /* Opciones de documentos */
 .documento-opciones {
-  margin-top: 15px; /* Aumentar margen superior */
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
-  gap: 8px; /* Aumentar el espacio entre botones */
+  gap: 10px;
 }
 
 .documento-opciones button {
-  padding: 8px 14px; /* Aumentar espaciado interno */
-  font-size: 14px; /* Aumentar tamaño de texto */
+  padding: 10px;
+  font-size: 14px;
   cursor: pointer;
   border: none;
-  border-radius: 6px; /* Bordes más redondeados */
+  border-radius: 6px;
   background-color: #7a3b3b;
   color: white;
-  flex: 1; /* Mantener el mismo espacio entre botones */
+  flex: 1;
 }
 
 .documento-opciones button:hover {
-  background-color: #7a3b3b;
+  background-color: #5a2929;
 }
 
 .documento-opciones .btn-mas-tarde {
-  background-color: #ccc;
+  background-color: #7a3b3b;
 }
 
 .documento-opciones .btn-mas-tarde:hover {
-  background-color: #b3b3b3;
+  background-color: #361414;
 }
 
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
   #documentos {
-    max-width: 95%; /* Ocupa casi todo el ancho disponible */
-    padding: 12px; /* Reducir padding interno */
+    max-width: 95%;
+    padding: 15px;
   }
 
   #documentos h2 {
-    font-size: 16px; /* Título más pequeño */
+    font-size: 18px;
   }
 
-  #documentos p, 
+  #documentos p,
   #documentos ul li {
-    font-size: 13px; /* Texto más pequeño */
+    font-size: 13px;
+  }
+
+  .drop-area {
+    padding: 15px;
   }
 
   .documento-opciones button {
-    font-size: 13px; /* Botones más pequeños */
-    padding: 6px 12px; /* Reducir espaciado interno */
+    font-size: 13px;
+    padding: 8px;
   }
 }
+
 
 
   /* Contenedor general para la tarjeta en el costado de la pantalla */
@@ -423,7 +505,7 @@ body {
   padding: 3px; /* Reducir más el padding */
   text-align: left;
   border-bottom: 1px solid #ddd;
-  font-size: 8px; /* Reducir aún más tamaño de la fuente en las celdas */
+  font-size: 7px; /* Reducir aún más tamaño de la fuente en las celdas */
 }
 
 
@@ -743,6 +825,31 @@ input:focus {
   box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3), -12px -12px 20px rgba(0, 0, 0, 0.8);
 }
 
+/* Contenedor de precios */
+.prices {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Tarjetas de precios */
+.price-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  flex: 1 1 30%;
+  max-width: 30%;
+  transition: transform 0.3s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-5px);
+}
+
 /* Títulos de las tarjetas */
 .price-card h3 {
   margin-bottom: 10px;
@@ -787,7 +894,7 @@ input:focus {
 /* Iconos */
 .price-card .price-details ul li i {
   font-size: 18px;
-  color: #7a3b3b; /* Ajustado para coincidir con los colores del diseño */
+  color: #7a3b3b;
 }
 
 /* Botón dentro de la tarjeta */
@@ -805,11 +912,6 @@ input:focus {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.price-card .price-details ul li i {
-  font-size: 18px;
-  color: #5e2c2c; /* Color actualizado para los iconos */
-}
-
 .price-card button:hover {
   background-color: #5e2c2c;
   transform: translateY(-2px);
@@ -818,36 +920,17 @@ input:focus {
 
 /* Responsividad */
 @media (max-width: 1024px) {
-  .prices {
-    flex-wrap: wrap;
-  }
-
-  .price-button {
-    background-color: #5e2c2c;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-
-  .price-button:hover {
-    background-color: #4a2222;
-  }
-
   .price-card {
-    flex: 1 1 40%; /* Dos tarjetas por fila en pantallas medianas */
-    max-width: 40%;
+    flex: 1 1 45%; /* Dos tarjetas por fila en pantallas medianas */
+    max-width: 45%;
   }
 }
 
 @media (max-width: 768px) {
   .prices {
     flex-direction: column;
-    gap: 10px;
-    padding: 0 10px; /* Añade un padding lateral para móviles */
+    gap: 15px;
+    padding: 0 15px;
   }
 
   .price-card {
@@ -858,23 +941,23 @@ input:focus {
 
 @media (max-width: 480px) {
   .price-card {
-    padding: 15px; /* Reduce el padding en móviles muy pequeños */
+    padding: 15px;
   }
 
   .price-card h3 {
-    font-size: 1.2em; /* Reduce el tamaño del título en móviles */
+    font-size: 1.2em;
   }
 
   .price {
-    font-size: 24px; /* Reduce el tamaño del precio en móviles */
+    font-size: 24px;
   }
 
   .price-details {
-    font-size: 12px; /* Reduce el tamaño de los detalles en móviles */
+    font-size: 12px;
   }
 
   .price-card button {
-    font-size: 12px; /* Reduce el tamaño del botón en móviles */
+    font-size: 12px;
     padding: 8px 15px;
   }
 }
@@ -1228,4 +1311,145 @@ label {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+
+
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.75);
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #ffffff;
+  margin: 5% auto;
+  padding: 2rem;
+  border: none;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative; /* Permite posicionar el botón de cierre */
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Reducir tamaño del título */
+.modal-header h2 {
+  font-size: 1.4rem; /* Antes 1.6rem */
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.modal-header .logo {
+  width: 80px;
+  height: auto;
+}
+
+/* Posicionar la "X" de cierre en la esquina superior derecha */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #888888;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #1a1a1a;
+}
+
+/* Modal Body */
+.modal-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333333;
+}
+
+.modal-body h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-top: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+
+.modal-body p {
+  margin: 0.6rem 0;
+}
+
+.modal-body hr {
+  border: 0;
+  height: 1px;
+  background: #e0e0e0;
+  margin: 1.2rem 0;
+}
+
+/* Modal Action Button */
+.modal-button {
+  background-color: #0070f3;
+  color: #ffffff;
+  border: none;
+  padding: 0.7rem 1.3rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.modal-button:hover {
+  background-color: #0051cc;
+  transform: translateY(-1px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 1.5rem;
+    margin: 8% auto;
+  }
+
+  .modal-header h2 {
+    font-size: 1.2rem; /* Reducido aún más para móviles */
+  }
+
+  .modal-body {
+    font-size: 0.9rem;
+  }
+
+  .modal-body h3 {
+    font-size: 1.1rem;
+  }
+
+  /* Ajuste del botón de cierre para móviles */
+  .close-button {
+    top: 8px;
+    right: 8px;
+    font-size: 1.6rem;
+  }
 }
