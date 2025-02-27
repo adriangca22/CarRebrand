@@ -202,22 +202,21 @@ async function calcularPrecioYGuardar() {
   showTab('precio');
 }
 
-// Validar el formulario
 function validarFormulario() {
   const fechaMatriculacion = document.getElementById("fechaMatriculacion")?.value;
   const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador")?.value;
   const precioContrato = parseFloat(document.getElementById("precioContrato")?.value);
   const combustible = document.getElementById("combustible")?.value;
-  const correo = document.getElementById("correo")?.value;
+  const correo = document.getElementById("correo")?.value; // Campo opcional
   const marca = document.getElementById("marca")?.value;
   const modelo = document.getElementById("modelo")?.value;
 
+  // Validar campos obligatorios (excepto correo)
   if (
     !fechaMatriculacion ||
     !comunidadAutonoma ||
     isNaN(precioContrato) ||
     !combustible ||
-    !correo ||
     !marca ||
     !modelo
   ) {
@@ -225,11 +224,13 @@ function validarFormulario() {
     return false;
   }
 
-  // Validar el formato del correo electrónico
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(correo)) {
-    alert("Por favor, introduce un correo electrónico válido.");
-    return false;
+  // Validar el formato del correo electrónico solo si se proporciona
+  if (correo) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) {
+      alert("Por favor, introduce un correo electrónico válido.");
+      return false;
+    }
   }
 
   return true;
@@ -274,89 +275,94 @@ window.onclick = function(event) {
 
 
 
-// Función para validar el número de tarjeta usando el algoritmo de Luhn
-function validarNumeroTarjeta(numeroTarjeta) {
-  const regexTarjeta = /^[0-9]{13,19}$/; // Números de 13 a 19 dígitos
-  if (!regexTarjeta.test(numeroTarjeta)) return false;
+// Función para mostrar el resumen del trámite
+function mostrarResumen() {
+  const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
 
-  let suma = 0;
-  for (let i = 0; i < numeroTarjeta.length; i++) {
-    let digito = parseInt(numeroTarjeta[i], 10);
-    if ((numeroTarjeta.length - i) % 2 === 0) {
-      digito *= 2;
-      if (digito > 9) digito -= 9;
-    }
-    suma += digito;
-  }
-  return suma % 10 === 0;
+  // Actualizar el total en la sección de pago
+  document.getElementById("pagoTotal").textContent = total.toFixed(2);
+  document.getElementById("pagoTotalBoton").textContent = total.toFixed(2);
+
+  // Mostrar el resumen
+  alert(`Resumen del trámite:\nTotal a pagar: ${total.toFixed(2)} €`);
 }
 
-// Función para validar la fecha de expiración
-function validarFechaExpiracion(fechaExpiracion) {
-  const regexFecha = /^(0[1-9]|1[0-2])\/\d{2}$/; // Formato MM/YY
-  if (!regexFecha.test(fechaExpiracion)) return false;
-
-  const [mes, año] = fechaExpiracion.split("/");
-  const fechaActual = new Date();
-  const añoActual = fechaActual.getFullYear() % 100;
-  const mesActual = fechaActual.getMonth() + 1;
-
-  if (año < añoActual || (año == añoActual && mes < mesActual)) {
-    return false; // Fecha pasada
-  }
-  return true;
-}
-
-// Función para validar el código de seguridad
-function validarCodigoSeguridad(codigoSeguridad) {
-  const regexCodigo = /^[0-9]{3,4}$/; // 3 o 4 dígitos
-  return regexCodigo.test(codigoSeguridad);
-}
-
-// Función para manejar el envío del formulario de pago
-document.getElementById("formPago").addEventListener("submit", function (event) {
+// Función para manejar el envío del formulario de pago con Stripe
+document.getElementById("formPago").addEventListener("submit", async function (event) {
   event.preventDefault(); // Evitar el envío del formulario
 
-  // Obtener los valores del formulario
-  const nombreApellidos = document.getElementById("nombreApellidos").value.trim();
-  const telefono = document.getElementById("telefono").value.trim();
-  const numeroTarjeta = document.getElementById("numeroTarjeta").value.trim();
-  const fechaExpiracion = document.getElementById("fechaExpiracion").value.trim();
-  const codigoSeguridad = document.getElementById("codigoSeguridad").value.trim();
+  // Validar los campos del formulario de pago
+  const nombreApellidos = document.getElementById("nombreApellidos").value;
+  const telefono = document.getElementById("telefono").value;
+  const total = parseFloat(document.getElementById("pagoTotal").textContent) * 100; // Convertir a céntimos
 
-  // Validar campos obligatorios
-  if (!nombreApellidos || !telefono || !numeroTarjeta || !fechaExpiracion || !codigoSeguridad) {
-    alert("Por favor, completa todos los campos del formulario de pago.");
+  if (!nombreApellidos || !telefono || isNaN(total) || total <= 0) {
+    alert("Por favor, completa todos los campos y verifica el monto.");
     return;
   }
 
-  // Validar número de tarjeta
-  if (!validarNumeroTarjeta(numeroTarjeta)) {
-    alert("Número de tarjeta no válido. Por favor, introduce un número de tarjeta válido.");
-    return;
+  try {
+    // Llamar a la API backend para crear una sesión de pago en Stripe
+    const response = await fetch("https://tu-servidor.com/crear-sesion-pago", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: total, name: nombreApellidos, phone: telefono }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Error al procesar el pago");
+
+    // Redirigir a la página de pago de Stripe
+    const stripe = Stripe("pk_live_51OpdmhJaeP6i0xi8L4uF5lVArUwuapOlJwbovJdBec1RqDfCJzjwoDJGiHC5pDypqOyOhHXfPlvjDEZRgorZpRko00oVTCI0Xb"); // Agrega tu clave pública de Stripe
+    stripe.redirectToCheckout({ sessionId: data.id });
+  } catch (error) {
+    alert(`Error al procesar el pago: ${error.message}`);
   }
-
-  // Validar fecha de expiración
-  if (!validarFechaExpiracion(fechaExpiracion)) {
-    alert("Fecha de expiración no válida. Asegúrate de que esté en formato MM/YY y no esté vencida.");
-    return;
-  }
-
-  // Validar código de seguridad
-  if (!validarCodigoSeguridad(codigoSeguridad)) {
-    alert("Código de seguridad no válido. Debe ser un número de 3 o 4 dígitos.");
-    return;
-  }
-
-  // Simular el proceso de pago
-  const total = parseFloat(document.getElementById("pagoTotal").textContent);
-  alert(`Pago realizado con éxito.\nTotal pagado: ${total.toFixed(2)} €`);
-
-  // Limpiar el formulario después del pago
-  document.getElementById("formPago").reset();
-  document.getElementById("pagoTotal").textContent = "0.00";
-  document.getElementById("pagoTotalBoton").textContent = "0.00";
 });
+
+// Función para actualizar el total en la sección de pago
+function actualizarTotalPago() {
+  const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
+  document.getElementById("pagoTotal").textContent = total.toFixed(2);
+  document.getElementById("pagoTotalBoton").textContent = total.toFixed(2);
+}
+
+// Llamar a actualizarTotalPago cuando se calcule el precio
+document.getElementById("calcularPrecioBtn").addEventListener("click", function () {
+  calcularPrecioYGuardar(); // Solo realiza el cálculo
+  actualizarTotalPago();    // Actualiza el total en la vista
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

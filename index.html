@@ -71,8 +71,8 @@
         <img src="/logo.png" alt="Logotipo de la empresa">
     </a>
     <div class="nav-links">
-       <a href="https://calm-customers-004738.framer.app/">Inicio</a>
-        <a href="#seccion1">Trámites DGT</a>
+       <a href="https://burocraciacero.com/">Inicio</a>
+        <a href="#seccion1"> transferencia de vehículos</a>
        
         <a href="https://calm-customers-004738.framer.app/faq">FAQ</a>
     </div>
@@ -138,17 +138,17 @@
         <div class="header-item">
             <i class="fas fa-clock"></i>
             <span>Documento provisional
-              al instante</span>
+              al instante</span>npx kill-port 3000
         </div>
     </div>
 
 
   <div class="card-form">
     <div class="tab-container">
-      <button class="tab-button" onclick="showTab('vehiculo')">Vehículo</button>
-      <button class="tab-button" onclick="showTab('precio')">Precio</button>
-      <button class="tab-button" onclick="showTab('pago')">Pago</button>
-      <button class="tab-button" onclick="showTab('documentos')">Documentos</button>
+      <button class="tab-button" onclick="showTab('vehiculo')">1.Vehículo</button>
+      <button class="tab-button" onclick="showTab('precio')">2.Precio</button>
+      <button class="tab-button" onclick="showTab('pago')">3.Pago</button>
+      <button class="tab-button" onclick="showTab('documentos')">4.Documentos</button>
     </div>
   
     <div id="vehiculo" class="tab-content active-tab">
@@ -188,10 +188,7 @@
           <input type="text" id="combustible" name="combustible" placeholder="Combustible" required>
         </div>
   
-        <!-- Correo -->
-        <label for="correo">Correo</label>
-        <input type="email" id="correo" name="correo" placeholder="Correo" required>
-  
+       
       
   
         <!-- Precio Contrato -->
@@ -245,7 +242,7 @@
         </ul>
       </div>
     </div>
-    <div id="pago" class="tab-content">
+   <div id="pago" class="tab-content">
       <h2>Pago</h2>
       <form id="formPago">
         <div class="pago-datos">
@@ -254,7 +251,10 @@
     
           <label for="telefono">Teléfono</label>
           <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
-    
+          <!-- Correo -->
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" placeholder="Correo" required>
+  
           <button type="button" id="verResumenBtn">Ver resumen del trámite</button>
         </div>
     
@@ -290,6 +290,7 @@
       </div>
     </div>
     
+    
 
     <div id="documentos" class="tab-content">
       <h2>Documentos</h2>
@@ -298,51 +299,53 @@
       <p style="font-size: 13px;">Es importante que la documentación que se adjunte sea de calidad.</p>
       
       <ul>
-        <li><strong>DNI del comprador</strong></li>
-        <li><strong>Padrón comprador</strong>: Solo si el domicilio del comprador no coincide con el DNI, deberá presentar un certificado de empadronamiento.</li>
-        <li><strong>DNI del vendedor</strong></li>
-        <li><strong>Ficha técnica del vehículo</strong></li>
-        <li><strong>Permiso de circulación original del vehículo</strong></li>
+          <li><strong>DNI del comprador</strong></li>
+          <li><strong>Padrón comprador</strong>: Solo si el domicilio del comprador no coincide con el DNI, deberá presentar un certificado de empadronamiento.</li>
+          <li><strong>DNI del vendedor</strong></li>
+          <li><strong>Ficha técnica del vehículo</strong></li>
+          <li><strong>Permiso de circulación original del vehículo</strong></li>
       </ul>
-    
+  
       <p style="font-size: 13px;">Si vas a hacer fotos, te recomendamos:</p>
       <ul>
-        <li>Asegúrate de evitar brillos en los documentos.</li>
-        <li>Tener una buena iluminación y evitar sombras.</li>
-        <li>Enfocar bien, la foto debe ser nítida y no estar borrosa.</li>
-        <li>No cortar ni doblar, los documentos deben verse completos.</li>
+          <li>Asegúrate de evitar brillos en los documentos.</li>
+          <li>Tener una buena iluminación y evitar sombras.</li>
+          <li>Enfocar bien, la foto debe ser nítida y no estar borrosa.</li>
+          <li>No cortar ni doblar, los documentos deben verse completos.</li>
       </ul>
-    
+  
       <!-- Área de carga de archivos -->
       <div id="dropArea" class="drop-area">
-        <p>Arrastra y suelta los archivos aquí o haz clic en el botón</p>
-        <input type="file" id="fileInput" multiple hidden>
-        <button type="button" class="btn-adjuntar" onclick="document.getElementById('fileInput').click();">Adjuntar ahora</button>
+          <p>Arrastra y suelta los archivos aquí o haz clic en el botón</p>
+          <input type="file" id="fileInput" multiple hidden>
+          <button type="button" class="btn-adjuntar" onclick="document.getElementById('fileInput').click();">Adjuntar ahora</button>
       </div>
-    
+  
       <!-- Barra de progreso -->
       <div id="progressContainer" style="display: none; margin-top: 10px;">
-        <div id="progressBar" style="width: 0%; height: 5px; background-color: green;"></div>
+          <div id="progressBar" style="width: 0%; height: 5px; background-color: green;"></div>
       </div>
-    
+  
       <!-- Lista de archivos subidos -->
       <ul id="fileList"></ul>
-    
+  
       <div class="documento-opciones">
-        <button type="button" class="btn-mas-tarde">Más tarde</button>
+          <button type="button" class="btn-mas-tarde">Más tarde</button>
       </div>
-    </div>
+  </div>
+  
+
     
-    
+
 
   
 </header>
 
 
 </h2>
-<h1 style="color: white;"> Servicios de gestión vehicular</h1>
-<h2 style="color: white; font-size: 15px; text-align: center; margin-bottom: 50px;">
-  Cancelación de reserva de dominio, solicitud de etiqueta ambiental y duplicado de carnet de conducir
+<h1 style="color: white;"> conoce otros servicios de Burocracia Cero</h1>
+<h2 style="color: white; font-size: 13px; text-align: center; margin-bottom: 50px;">
+
   <br>
  
 </h2>
@@ -374,7 +377,7 @@
 
 </div>
 
-
+<script type="module" src="./server.js"></script>
 <script type="module" src="./app.js"></script>
 <script type="module" src="./tabla.js"></script>
  
