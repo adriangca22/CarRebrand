@@ -47,10 +47,8 @@ const coeficientesComunidad = {
 
 // Función para listar vehículos
 async function listarVehiculos() {
-  const tbody = document.getElementById("tablaVehiculos")?.querySelector("tbody");
-  if (!tbody) return;
-
-  tbody.innerHTML = ""; // Limpia el contenido previo
+  const tbody = document.getElementById("tablaVehiculos").querySelector("tbody");
+  tbody.innerHTML = "";
 
   try {
     const querySnapshot = await getDocs(vehiculosCollection);
@@ -58,19 +56,19 @@ async function listarVehiculos() {
       const data = doc.data();
       const row = `
         <tr>
-          <td>${data.FechaMatriculacion || "No especificado"}</td>
-          <td>${data.ComunidadAutonoma || "No especificado"}</td>
-          <td>${data.Combustible || "No especificado"}</td>
-          <td>${data.Marca || "No especificado"}</td>
-          <td>${data.Modelo || "No especificado"}</td>
-          <td>${data.PrecioContrato || "No especificado"} €</td>
+          <td>${data.FechaMatriculacion}</td>
+          <td>${data.ComunidadAutonoma}</td>
+          <td>${data.Combustible}</td>
+          <td>${data.Correo}</td>
+          <td>${data.Marca}</td>
+          <td>${data.Modelo}</td>
+          <td>${data.PrecioContrato}</td>
         </tr>
       `;
       tbody.innerHTML += row;
     });
   } catch (error) {
-    console.error("Error al listar los vehículos:", error.message || error);
-    alert("Hubo un error al cargar los vehículos. Detalles: " + (error.message || error));
+    console.error("Error al listar los vehículos:", error);
   }
 }
 
@@ -111,15 +109,14 @@ function actualizarModal(valorHacienda, depreciacion, valorFiscal, itp) {
   }
 }
 
-// Función para calcular el precio final SIN GUARDAR EN FIREBASE
-function calcularPrecioSinGuardar() {
-  const fechaMatriculacion = document.getElementById("fechaMatriculacion")?.value;
-  const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador")?.value;
-  const precioContrato = parseFloat(document.getElementById("precioContrato")?.value);
-  const marca = document.getElementById("marca")?.value;
-  const modelo = document.getElementById("modelo")?.value;
+// Función para calcular el precio final y enviar datos a Firebase
+async function calcularPrecio() {
+  const fechaMatriculacion = document.getElementById("fechaMatriculacion").value;
+  const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador").value;
+  const precioContrato = parseFloat(document.getElementById("precioContrato").value);
 
-  if (!validarFormulario()) {
+  if (!fechaMatriculacion || !comunidadAutonoma || isNaN(precioContrato)) {
+    alert("Por favor, completa todos los campos antes de calcular el precio.");
     return;
   }
 
@@ -133,20 +130,18 @@ function calcularPrecioSinGuardar() {
   const depreciacion = coeficientesDepreciacionVehiculos.find(c => antigüedad >= c.años)?.coef || 0.10;
 
   // Calcular el valor fiscal
-  const valorFiscal = calcularValorVenal(valorBaseHacienda, fechaMatriculacion, comunidadAutonoma);
+  const valorFiscal = valorBaseHacienda * depreciacion;
 
   // Calcular el ITP (4% sobre el valor más alto entre el precio de compraventa y el valor fiscal)
   const porcentajeITP = 4;
   const baseITP = Math.max(precioContrato, valorFiscal); // Usar el valor más alto
   const impuesto = calcularITP(baseITP, porcentajeITP);
 
-  // Calcular el total (incluyendo tasas DGT, gestión, IVA y costos adicionales)
+  // Calcular el total (sin incluir el precio de contrato)
   const tasasDGT = 55.70;
   const gestion = 61.36;
   const iva = 12.89;
-  const costoAdicional1 = 12; // Ejemplo: Seguro temporal
-  const costoAdicional2 = 9.90; // Ejemplo: Otro servicio
-  const total = tasasDGT + gestion + iva + impuesto + costoAdicional1 + costoAdicional2;
+  const total = tasasDGT + gestion + iva + impuesto;
 
   // Mostrar resultados en la interfaz
   document.getElementById("tasasDGT").textContent = `${tasasDGT.toFixed(2)} €`;
@@ -157,36 +152,11 @@ function calcularPrecioSinGuardar() {
 
   // Actualizar el modal con los valores calculados
   actualizarModal(valorBaseHacienda, depreciacion, valorFiscal, impuesto);
-}
-// Función para calcular el precio final y enviar datos a Firebase
-async function calcularPrecioYGuardar() {
-  // Validar el formulario antes de proceder
-  if (!validarFormulario()) {
-    return;
-  }
 
-  calcularPrecioSinGuardar(); // Primero calcula los precios
-
-  // Obtener los valores del formulario
-  const fechaMatriculacion = document.getElementById("fechaMatriculacion")?.value || "No especificado";
-  const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador")?.value || "No especificado";
-  const precioContrato = parseFloat(document.getElementById("precioContrato")?.value) || 0;
-  const combustible = document.getElementById("combustible")?.value || "No especificado";
-  const marca = document.getElementById("marca")?.value || "No especificado";
-  const modelo = document.getElementById("modelo")?.value || "No especificado";
-
-  // Obtener los valores calculados
-  const valorFiscal = parseFloat(document.getElementById("valorFiscal")?.textContent.replace(" €", "")) || 0;
-  const impuesto = parseFloat(document.getElementById("impuesto")?.textContent.replace(" €", "")) || 0;
-  const total = parseFloat(document.getElementById("total")?.textContent.replace(" €", "")) || 0;
-
-  // Crear un nuevo registro para guardar en Firebase
+  // Guardar los datos en Firebase
   const nuevoRegistro = {
     FechaMatriculacion: fechaMatriculacion,
     ComunidadAutonoma: comunidadAutonoma,
-    Combustible: combustible,
-    Marca: marca,
-    Modelo: modelo,
     PrecioContrato: precioContrato,
     ValorFiscal: valorFiscal,
     ITP: impuesto,
@@ -195,78 +165,44 @@ async function calcularPrecioYGuardar() {
   };
 
   try {
-    // Guardar los datos en Firebase
     await addDoc(vehiculosCollection, nuevoRegistro);
-    console.log("Datos guardados correctamente en Firebase.");
+    alert("Datos guardados correctamente en Firebase.");
     listarVehiculos(); // Actualizar la tabla después de guardar
-    alert("Los datos se han guardado correctamente.");
   } catch (error) {
-    console.error("Error al guardar en Firebase:", error.message || error);
-    alert("Hubo un error al guardar los datos. Detalles: " + (error.message || error));
+    console.error("Error al guardar en Firebase:", error);
+    alert("Hubo un error al guardar los datos. Por favor, intenta nuevamente.");
   }
 
-  // Cambiar a la pestaña de precios
   showTab('precio');
 }
 
-// Función para validar el formulario
-function validarFormulario() {
-  const fechaMatriculacion = document.getElementById("fechaMatriculacion")?.value;
-  const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador")?.value;
-  const precioContrato = parseFloat(document.getElementById("precioContrato")?.value);
-  const combustible = document.getElementById("combustible")?.value;
-  const marca = document.getElementById("marca")?.value;
-  const modelo = document.getElementById("modelo")?.value;
-
-  // Validar campos obligatorios
-  if (
-    !fechaMatriculacion ||
-    !comunidadAutonoma ||
-    isNaN(precioContrato) ||
-    !combustible ||
-    !marca ||
-    !modelo
-  ) {
-    alert("Por favor, completa todos los campos obligatorios.");
-    return false;
-  }
-
-  return true;
-}
-
 // Asociar eventos a botones y formularios
-document.getElementById("calcularPrecioBtn")?.addEventListener("click", calcularPrecioYGuardar);
+document.getElementById("calcularPrecioBtn").addEventListener("click", calcularPrecio);
 document.addEventListener("DOMContentLoaded", listarVehiculos);
 
 // Función para cambiar de pestañas
 function showTab(tabId) {
   document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active-tab'));
   document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-  document.getElementById(tabId)?.classList.add('active-tab');
-  document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`)?.classList.add('active');
+  document.getElementById(tabId).classList.add('active-tab');
+  document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
 }
 
 // Mostrar modal al hacer clic en "+info"
-document.getElementById("mostrarInfo")?.addEventListener("click", function(event) {
+document.getElementById("mostrarInfo").addEventListener("click", function(event) {
   event.preventDefault();
-  calcularPrecioSinGuardar(); // Solo calcula los precios, sin guardar en Firebase
+  calcularPrecio(); // Asegura que se calculen los valores antes de abrir el modal
   document.getElementById("modalInfo").style.display = "block";
 });
 
 // Cerrar modal al hacer clic en la "X"
-document.getElementById("cerrarModal")?.addEventListener("click", function() {
+document.getElementById("cerrarModal").addEventListener("click", function() {
   document.getElementById("modalInfo").style.display = "none";
 });
 
 // Cerrar modal al hacer clic fuera del contenido
 window.onclick = function(event) {
-  const modal = document.getElementById("modalInfo");
-  if (event.target === modal) {
-    modal.style.display = "none";
+  if (event.target == document.getElementById("modalInfo")) {
+    document.getElementById("modalInfo").style.display = "none";
   }
 };
-
-
-
-
-

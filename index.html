@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-  
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Burocracia Cero</title>
 
@@ -73,36 +68,53 @@
         <img src="/logo.png" alt="Logotipo de la empresa">
     </a>
     <div class="nav-links">
-       <a href="https://burocraciacero.com/">Inicio</a>
-        <a href="#seccion1"> transferencia de vehículos</a>
+       <a href="https://calm-customers-004738.framer.app/">Inicio</a>
+        <a href="#seccion1">Trámites DGT</a>
        
         <a href="https://calm-customers-004738.framer.app/faq">FAQ</a>
     </div>
-   <!-- Contenedor del botón de contacto -->
-<div id="contact-container">
-  <button id="contact-button">
-      Contáctenos
-  </button>
-  <div id="contact-menu">
-      <a href="https://wa.me/XXXXXXXXXXX" target="_blank">
-          <i class="fa-brands fa-whatsapp"></i> WhatsApp
-      </a>
-      <a href="mailto:info@ekoevent.com">
-          <i class="fa-solid fa-envelope"></i> Gmail
-      </a>
-      <a href="#">
-          <i class="fa-solid fa-comment-dots"></i> Chat
-      </a>
-  </div>
-</div>
-
+    <div id="whatsapp-icon">
+        <a href="https://wa.me/123456789" target="_blank" class="whatsapp-button">
+            <img src="/prime--whatsapp (2).svg" alt="WhatsApp">
+            Contáctenos
+        </a>
+    </div>
 </nav>
 
 
 
   <div class="container">
-   
-    
+    <!-- Sección informativa -->
+    <div class="info-section">
+      <h2>Cambio de titular de tu vehículo
+         completamente online</h2>
+      <p>
+        Rápido, fácil y cómodo
+        Cambiá el nombre de tu
+        vehículo, sin tediosos
+        papeleos y 100% conable.
+      </p>
+  
+      <!-- Estrellas de calificación -->
+      <div class="rating">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+      </div>
+      <p style="font-size: 11px;">
+     4.4  504 opiniones
+      </p>
+  
+      <!-- Botón de atención al cliente -->
+      <div class="contact">
+        <a href="https://wa.me/tu-numero" target="_blank" class="contact-button">
+          Contáctanos
+        </a>
+        <a href="https://wa.me/tu-numero" target="_blank" class="whatsapp-link">
+          <i class="fab fa-whatsapp"></i>
+        </a>
       </div>
     </div>
   </div>
@@ -123,17 +135,17 @@
         <div class="header-item">
             <i class="fas fa-clock"></i>
             <span>Documento provisional
-           
+              al instante</span>
         </div>
     </div>
 
 
   <div class="card-form">
     <div class="tab-container">
-      <button class="tab-button" onclick="showTab('vehiculo')">1.Vehículo</button>
-      <button class="tab-button" onclick="showTab('precio')">2.Precio</button>
-      <button class="tab-button" onclick="showTab('pago')">3.Pago</button>
-      <button class="tab-button" onclick="showTab('documentos')">4.Documentos</button>
+      <button class="tab-button" onclick="showTab('vehiculo')">Vehículo</button>
+      <button class="tab-button" onclick="showTab('precio')">Precio</button>
+      <button class="tab-button" onclick="showTab('pago')">Pago</button>
+      <button class="tab-button" onclick="showTab('documentos')">Documentos</button>
     </div>
   
     <div id="vehiculo" class="tab-content active-tab">
@@ -173,7 +185,10 @@
           <input type="text" id="combustible" name="combustible" placeholder="Combustible" required>
         </div>
   
-       
+        <!-- Correo -->
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" placeholder="Correo" required>
+  
       
   
         <!-- Precio Contrato -->
@@ -205,7 +220,10 @@
           </ul>
           
           <p><strong>Te recomendamos añadir:</strong></p>
-      
+          <ul>
+            <li><span id="recomendacion1">12 €</span></li>
+            <li><span id="recomendacion2">9.90 €</span></li>
+          </ul>
           <p><strong>Total:</strong> <span id="total">129.95 €</span></p>
         </div>
       </form>
@@ -237,15 +255,11 @@
           <label for="telefono">Teléfono</label>
           <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
     
-          <!-- Correo -->
-          <label for="correo">Correo</label>
-          <input type="email" id="correo" name="correo" placeholder="Correo" required>
-    
-          <button type="button" id="verResumenBtn">Ver resumen del trámite</button>
+          <button type="button" onclick="mostrarResumen()">Ver resumen del trámite</button>
         </div>
     
         <div class="pago-resumen">
-          <p><strong>Total a pagar: <span id="pagoTotal">0.00</span> €</strong></p>
+          <p><strong><span id="pagoTotal">129.95</span> €</strong></p>
     
           <ul>
             <li><strong>Garantía de devolución</strong></li>
@@ -253,99 +267,56 @@
             <li><strong>Atención 24/7</strong></li>
           </ul>
     
+         
+       
+    
           <p><strong>Tarjeta de crédito:</strong></p>
+          <input type="text" placeholder="Número de tarjeta" required>
+          <input type="text" placeholder="Fecha de expiración" required>
+          <input type="text" placeholder="Código de seguridad" required>
     
-          <!-- Campo de número de tarjeta con iconos Visa y MasterCard -->
-          <div class="input-group">
-            <i class="fa-brands fa-cc-visa"></i>
-            <i class="fa-brands fa-cc-mastercard"></i>
-            <input type="text" id="numeroTarjeta" placeholder="Número de tarjeta (1234 5678 9012 3456)" required>
-          </div>
-    
-          <!-- Fecha de expiración y código de seguridad -->
-          <div class="input-group">
-            <label for="fechaExpiracion" class="sr-only">Fecha de expiración</label>
-            <input type="text" id="fechaExpiracion" placeholder="MM/AA" pattern="\d{2}/\d{2}" required>
-            <label for="codigoSeguridad" class="sr-only">Código de seguridad</label>
-            <input type="text" id="codigoSeguridad" placeholder="CVV" maxlength="3" required>
-          </div>
-    
-          <button type="submit">Tramitar <span id="pagoTotalBoton">0.00</span> €</button>
+          <button type="submit">Tramitar <span id="pagoTotalBoton">129.95</span> €</button>
         </div>
       </form>
     </div>
-
-
-    <div id="modalDocumento" class="modal">
-      <div class="modal-overlay"></div> <!-- Fondo del modal -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <img src="logo.png" alt="Logo de Burocracia" class="logo"> <!-- Logo -->
-        
-        </div>
-        <div class="modal-body" id="documentoPreview">
-          <!-- Aquí se mostrarán los datos dinámicamente -->
-        </div>
-        <button id="descargarPDFBtn" class="modal-button">Descargar PDF</button>
-      </div>
-    </div>
-    
     
 
     <div id="documentos" class="tab-content">
       <h2>Documentos</h2>
       <p><strong>Adjuntar documentación</strong></p>
-      <p style="font-size: 13px;">Ten preparada la siguiente documentación, te la pediremos:</p>
+      <p style="font-size: 13px;">.Ten preparada la siguiente documentación, te la pediremos:</p>
+    
       <p style="font-size: 13px;">Es importante que la documentación que se adjunte sea de calidad.</p>
-      
       <ul>
-          <li><strong>DNI del comprador</strong></li>
-          <li><strong>Padrón comprador</strong>: Solo si el domicilio del comprador no coincide con el DNI, deberá presentar un certificado de empadronamiento.</li>
-          <li><strong>DNI del vendedor</strong></li>
-          <li><strong>Ficha técnica del vehículo</strong></li>
-          <li><strong>Permiso de circulación original del vehículo</strong></li>
+        <li><strong>DNI del comprador</strong></li>
+        <li><strong>Padrón comprador</strong>: Solo si el domicilio del comprador no coincide con el DNI, deberá presentar un certificado de empadronamiento.</li>
+        <li><strong>DNI del vendedor</strong></li>
+        <li><strong>Ficha técnica del vehículo</strong></li>
+        <li><strong>Permiso de circulación original del vehículo</strong></li>
       </ul>
-  
+    
       <p style="font-size: 13px;">Si vas a hacer fotos, te recomendamos:</p>
       <ul>
-          <li>Asegúrate de evitar brillos en los documentos.</li>
-          <li>Tener una buena iluminación y evitar sombras.</li>
-          <li>Enfocar bien, la foto debe ser nítida y no estar borrosa.</li>
-          <li>No cortar ni doblar, los documentos deben verse completos.</li>
+        <li>Asegúrate de evitar brillos en los documentos.</li>
+        <li>Tener una buena iluminación y evitar sombras.</li>
+        <li>Enfocar bien, la foto debe ser nítida y no estar borrosa.</li>
+        <li>No cortar ni doblar, los documentos deben verse completos.</li>
       </ul>
-  
-      <!-- Área de carga de archivos -->
-      <div id="dropArea" class="drop-area">
-          <p>Arrastra y suelta los archivos aquí o haz clic en el botón</p>
-          <input type="file" id="fileInput" multiple hidden>
-          <button type="button" class="btn-adjuntar" onclick="document.getElementById('fileInput').click();">Adjuntar ahora</button>
-      </div>
-  
-      <!-- Barra de progreso -->
-      <div id="progressContainer" style="display: none; margin-top: 10px;">
-          <div id="progressBar" style="width: 0%; height: 5px; background-color: green;"></div>
-      </div>
-  
-      <!-- Lista de archivos subidos -->
-      <ul id="fileList"></ul>
-  
-      <div class="documento-opciones">
-          <button type="button" class="btn-mas-tarde">Más tarde</button>
-      </div>
-  </div>
-  
-
     
+      <div class="documento-opciones">
+        <button type="button" class="btn-adjuntar">Adjuntar ahora</button>
+        <button type="button" class="btn-mas-tarde">Más tarde</button>
+      </div>
+    </div>
 
 
-  
 </header>
 
 
 </h2>
-<h1 style="color: white;"> conoce otros servicios de Burocracia Cero</h1>
-<h2 style="color: white; font-size: 13px; text-align: center; margin-bottom: 50px;">
-
+<h1 style="color: white;"> Servicios de gestión vehicular</h1>
+<h2 style="color: white; font-size: 15px; text-align: center; margin-bottom: 50px;">
+  cancelación de reserva de dominio, solicitud de etiqueta ambiental y duplicado de carnet de conducir
   <br>
  
 </h2>
@@ -377,9 +348,8 @@
 
 </div>
 
-<script type="module" src="/server.js"></script>
-<script type="module" src="/app.js"></script>
-<script type="module" src="/tabla.js"></script>
+<script type="module" src="./app.js"></script>
+<script type="module" src="./tabla.js"></script>
  
 <script>
   // Función para manejar el cambio de pestañas
@@ -426,26 +396,6 @@ document.addEventListener("DOMContentLoaded", function () {
     navLinksContainer.classList.toggle("active");
   });
 });
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const contactButton = document.getElementById("contact-button");
-    const contactMenu = document.getElementById("contact-menu");
-
-    if (contactButton && contactMenu) {
-        contactButton.addEventListener("click", function (event) {
-            event.stopPropagation();
-            contactMenu.style.display = contactMenu.style.display === "block" ? "none" : "block";
-        });
-
-        document.addEventListener("click", function (event) {
-            if (!contactButton.contains(event.target) && !contactMenu.contains(event.target)) {
-                contactMenu.style.display = "none";
-            }
-        });
-    }
-});
-
 </script>
 
     <!-- Script de Zoho SalesIQ -->
