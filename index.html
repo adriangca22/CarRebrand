@@ -245,7 +245,7 @@
         </ul>
       </div>
     </div>
-    <div id="pago" class="tab-content">
+  <div id="pago" class="tab-content">
       <h2>Pago</h2>
       <form id="formPago">
         <div class="pago-datos">
@@ -255,11 +255,15 @@
           <label for="telefono">Teléfono</label>
           <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
     
-          <button type="button" onclick="mostrarResumen()">Ver resumen del trámite</button>
+          <!-- Correo -->
+          <label for="correo">Correo</label>
+          <input type="email" id="correo" name="correo" placeholder="Correo" required>
+    
+          <button type="button" id="verResumenBtn">Ver resumen del trámite</button>
         </div>
     
         <div class="pago-resumen">
-          <p><strong><span id="pagoTotal">129.95</span> €</strong></p>
+          <p><strong>Total a pagar: <span id="pagoTotal">0.00</span> €</strong></p>
     
           <ul>
             <li><strong>Garantía de devolución</strong></li>
@@ -267,20 +271,27 @@
             <li><strong>Atención 24/7</strong></li>
           </ul>
     
-         
-       
-    
           <p><strong>Tarjeta de crédito:</strong></p>
-          <input type="text" placeholder="Número de tarjeta" required>
-          <input type="text" placeholder="Fecha de expiración" required>
-          <input type="text" placeholder="Código de seguridad" required>
     
-          <button type="submit">Tramitar <span id="pagoTotalBoton">129.95</span> €</button>
+          <!-- Campo de número de tarjeta con iconos Visa y MasterCard -->
+          <div class="input-group">
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <input type="text" id="numeroTarjeta" placeholder="Número de tarjeta (1234 5678 9012 3456)" required>
+          </div>
+    
+          <!-- Fecha de expiración y código de seguridad -->
+          <div class="input-group">
+            <label for="fechaExpiracion" class="sr-only">Fecha de expiración</label>
+            <input type="text" id="fechaExpiracion" placeholder="MM/AA" pattern="\d{2}/\d{2}" required>
+            <label for="codigoSeguridad" class="sr-only">Código de seguridad</label>
+            <input type="text" id="codigoSeguridad" placeholder="CVV" maxlength="3" required>
+          </div>
+    
+          <button type="submit">Tramitar <span id="pagoTotalBoton">0.00</span> €</button>
         </div>
       </form>
     </div>
-    
-
     <div id="documentos" class="tab-content">
       <h2>Documentos</h2>
       <p><strong>Adjuntar documentación</strong></p>
