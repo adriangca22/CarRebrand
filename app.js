@@ -237,7 +237,7 @@ document.getElementById("formPago").addEventListener("submit", async function (e
 
   try {
     // Llamar a la API backend para crear una sesión de pago en Stripe
-    const response = await fetch("http://localhost:3000/crear-sesion-pago", { // Asegúrate de que esta URL sea correcta
+    const response = await fetch("https://burocracia-p.vercel.app/", { // Asegúrate de que esta URL sea correcta
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount: Math.round(total), name: nombreApellidos, phone: telefono }),
@@ -271,5 +271,137 @@ document.getElementById("calcularPrecioBtn").addEventListener("click", function 
   calcularPrecioYGuardar(); // Solo realiza el cálculo
   actualizarTotalPago();    // Actualiza el total en la vista
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Función para generar la vista previa del documento
+  function generarVistaPrevia() {
+    const documentoPreview = document.getElementById("documentoPreview");
+    if (!documentoPreview) return;
+    // Obtener los datos del formulario
+    const fechaMatriculacion = document.getElementById("fechaMatriculacion")?.value || "No especificado";
+    const marca = document.getElementById("marca")?.value || "No especificado";
+    const modelo = document.getElementById("modelo")?.value || "No especificado";
+    const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador")?.value || "No especificado";
+    const combustible = document.getElementById("combustible")?.value || "No especificado";
+    const correo = document.getElementById("correo")?.value || "No especificado";
+    const precioContrato = document.getElementById("precioContrato")?.value || "No especificado";
+    // Obtener los valores de la sección de pago
+    const nombreApellidos = document.getElementById("nombreApellidos")?.value.trim() || "No especificado";
+    const telefono = document.getElementById("telefono")?.value.trim() || "No especificado";
+   
+    const tasasDGT = document.getElementById("tasasDGT")?.textContent || "0 €";
+    const gestion = document.getElementById("gestion")?.textContent || "0 €";
+    const iva = document.getElementById("iva")?.textContent || "0 €";
+    const impuesto = document.getElementById("impuesto")?.textContent || "0 €";
+    const total = document.getElementById("total")?.textContent || "0 €";
+    // Crear el contenido del documento
+    const contenido = `
+      <h3>Documento de Trámite</h3>
+      <p><strong>Fecha de Matriculación:</strong> ${fechaMatriculacion}</p>
+      <p><strong>Marca:</strong> ${marca}</p>
+      <p><strong>Modelo:</strong> ${modelo}</p>
+      <p><strong>Comunidad Autónoma del Comprador:</strong> ${comunidadAutonoma}</p>
+      <p><strong>Combustible:</strong> ${combustible}</p>
+
+      <p><strong>Precio de Compraventa:</strong> ${precioContrato} €</p>
+      <hr>
+      <h4>Datos de Usuario</h4>
+      <p><strong>Nombre y Apellidos:</strong> ${nombreApellidos}</p>
+      <p><strong>Teléfono:</strong> ${telefono}</p>
+       <p><strong>Correo:</strong> ${correo}</p>
+
+      <hr>
+      <h4>Detalles del Cálculo</h4>
+      <p><strong>Tasas DGT:</strong> ${tasasDGT}</p>
+      <p><strong>Gestión:</strong> ${gestion}</p>
+      <p><strong>IVA:</strong> ${iva}</p>
+      <p><strong>Impuesto de Transmisiones:</strong> ${impuesto}</p>
+      <p><strong>Total:</strong> ${total}</p>
+      <hr>
+      <p><strong>Envío a domicilio:</strong> Gratuito</p>
+    `;
+    // Mostrar el contenido en el modal
+    documentoPreview.innerHTML = contenido;
+    document.getElementById("modalDocumento").style.display = "block";
+  }
+
+  // Función para cerrar el modal de vista previa
+  function cerrarModalDocumento() {
+    const modal = document.getElementById("modalDocumento");
+    if (modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // Función para cerrar el modal al hacer clic fuera o presionar "Esc"
+  function cerrarModalFuera(event) {
+    const modal = document.getElementById("modalDocumento");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  function cerrarModalConEsc(event) {
+    if (event.key === "Escape") {
+      cerrarModalDocumento();
+    }
+  }
+
+  // Función para descargar el documento en PDF con mejor formato
+  function descargarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Agregar el logo en la parte superior
+    const logoImg = new Image();
+    logoImg.src = "logo.png"; // Ruta relativa o absoluta del logo
+
+    // Esperar a que la imagen cargue antes de agregarla al PDF
+    logoImg.onload = () => {
+      // Agregar el logo en la posición deseada
+      doc.addImage(logoImg, "PNG", 10, 10, 50, 20); // x, y, ancho, alto
+
+      // Agregar título
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("Documento de Trámite", 10, 40); // Ajustar la posición después del logo
+
+      // Obtener el contenido del documento sin etiquetas HTML
+      const documentoTexto = document.getElementById("documentoPreview").innerText.trim();
+
+      // Definir ancho de texto y margen
+      const marginLeft = 10;
+      const marginTop = 50; // Ajustar margen superior después del logo
+      const maxWidth = 180; // Evita que el texto se corte
+      const lineHeight = 7;
+
+      // Agregar contenido con ajuste automático
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      const lines = doc.splitTextToSize(documentoTexto, maxWidth);
+      doc.text(lines, marginLeft, marginTop + lineHeight);
+
+      // Guardar como archivo PDF
+      doc.save("documento_tramite.pdf");
+    };
+
+    // Manejar errores si la imagen no se carga correctamente
+    logoImg.onerror = () => {
+      console.error("Error al cargar el logo.");
+    };
+  }
+
+  // Asociar eventos a botones
+  document.getElementById("verResumenBtn")?.addEventListener("click", generarVistaPrevia);
+  document.getElementById("cerrarModalDocumentoBtn")?.addEventListener("click", cerrarModalDocumento);
+  document.getElementById("descargarPDFBtn")?.addEventListener("click", descargarPDF);
+  document.getElementById("modalDocumento")?.addEventListener("click", cerrarModalFuera);
+  document.addEventListener("keydown", cerrarModalConEsc);
+});
+
+
 
 
