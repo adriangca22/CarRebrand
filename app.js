@@ -208,79 +208,7 @@ window.onclick = function(event) {
 };
 
 
-// Función para mostrar el resumen del trámite
-function mostrarResumen() {
-  const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
-  // Actualizar el total en la sección de pago
-  document.getElementById("pagoTotal").textContent = total.toFixed(2);
-  document.getElementById("pagoTotalBoton").textContent = total.toFixed(2);
-  // Mostrar el resumen
-  alert(`Resumen del trámite:\nTotal a pagar: ${total.toFixed(2)} €`);
-}
-
-// Función para manejar el envío del formulario de pago con Stripe
-document.getElementById("formPago").addEventListener("submit", async function (event) {
-  event.preventDefault(); // Evitar el envío del formulario
-
-  // Validar los campos del formulario de pago
-  const nombreApellidos = document.getElementById("nombreApellidos").value.trim();
-  const telefono = document.getElementById("telefono").value.trim();
-  const total = parseFloat(document.getElementById("pagoTotal").textContent.replace(" €", "")) * 100; // Convertir a céntimos
-
-  if (!nombreApellidos || !telefono || isNaN(total) || total <= 0) {
-    alert("Por favor, completa todos los campos y verifica el monto.");
-    return;
-  }
-
-  try {
-    // Llamar a la API backend para crear una sesión de pago en Stripe
-    const response = await fetch("http://localhost:3000/crear-sesion-pago", { // Asegúrate de que esta URL sea correcta
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: Math.round(total), name: nombreApellidos, phone: telefono }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Error al procesar el pago");
-    }
-
-    const data = await response.json();
-
-    // Redirigir a la página de pago de Stripe
-    const stripe = Stripe("pk_live_51OpdmhJaeP6i0xi8L4uF5lVArUwuapOlJwbovJdBec1RqDfCJzjwoDJGiHC5pDypqOyOhHXfPlvjDEZRgorZpRko00oVTCI0Xb"); // Asegúrate de usar la clave pública correcta
-    stripe.redirectToCheckout({ sessionId: data.id });
-  } catch (error) {
-    console.error("Detalles del error:", error);
-    alert(`Error al procesar el pago: ${error.message}`);
-  }
-});
-
-// Función para actualizar el total en la sección de pago
-function actualizarTotalPago() {
-  const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
-  document.getElementById("pagoTotal").textContent = total.toFixed(2);
-  document.getElementById("pagoTotalBoton").textContent = total.toFixed(2);
-}
-
-// Llamar a actualizarTotalPago cuando se calcule el precio
-document.getElementById("calcularPrecioBtn").addEventListener("click", function () {
-  calcularPrecioYGuardar(); // Solo realiza el cálculo
-  actualizarTotalPago();    // Actualiza el total en la vista
-});
-
-
-
-
-
-
-
-
-
-
-
-
-// Función para mostrar el resumen del trámite
+// / Función para mostrar el resumen del trámite
 function mostrarResumen() {
   const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
   // Actualizar el total en la sección de pago
@@ -510,26 +438,104 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
+        
+        const storage = getStorage();
+        const inputFile = document.getElementById("fileInput");
+        const dropArea = document.getElementById("dropArea");
+        const fileList = document.getElementById("fileList");
+        const progressContainer = document.getElementById("progressContainer");
+        const progressBar = document.getElementById("progressBar");
+        const progressText = document.getElementById("progressText");
 
+        const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
+        const maxFileSize = 5 * 1024 * 1024; 
 
+        dropArea.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            dropArea.classList.add("dragging");
+        });
 
+        dropArea.addEventListener("dragleave", () => {
+            dropArea.classList.remove("dragging");
+        });
 
+        dropArea.addEventListener("drop", (event) => {
+            event.preventDefault();
+            dropArea.classList.remove("dragging");
+            handleFiles(event.dataTransfer.files);
+        });
 
+        inputFile.addEventListener("change", () => {
+            handleFiles(inputFile.files);
+        });
 
+        function handleFiles(files) {
+            for (let file of files) {
+                if (!allowedFormats.includes(file.type)) {
+                    alert("Formato no permitido. Solo JPG, PNG y PDF");
+                    continue;
+                }
+                if (file.size > maxFileSize) {
+                    alert("El archivo supera el límite de 5MB");
+                    continue;
+                }
+                uploadFile(file);
+            }
+        }
 
+        function uploadFile(file) {
+            const storageRef = ref(storage, `documentos/${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
 
+            progressContainer.style.display = "block";
+            progressText.innerText = `Subiendo ${file.name}...`;
 
+            uploadTask.on("state_changed",
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.style.width = progress + "%";
+                    progressText.innerText = `Subiendo ${file.name}: ${Math.round(progress)}%`;
+                },
+                (error) => {
+                    alert("Error al subir archivo: " + error.message);
+                    progressContainer.style.display = "none";
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        progressText.innerText = "Subida completa";
+                        setTimeout(() => {
+                            progressContainer.style.display = "none";
+                        }, 1000);
+                        displayFile(file.name, downloadURL);
+                    });
+                }
+            );
+        }
 
+        function displayFile(name, url) {
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="${url}" target="_blank">${name}</a> <button onclick="removeFile('${name}', '${url}')">Eliminar</button>`;
+            fileList.appendChild(li);
+        }
 
+        function removeFile(fileName, fileUrl) {
+            const storageRef = ref(storage, `documentos/${fileName}`);
+            deleteObject(storageRef).then(() => {
+                alert("Archivo eliminado correctamente");
+                removeFileFromList(fileUrl);
+            }).catch((error) => {
+                alert("Error al eliminar archivo: " + error.message);
+            });
+        }
 
-
-
-
-
-
-
-
-
-
-
-
+        function removeFileFromList(url) {
+            const items = fileList.getElementsByTagName("li");
+            for (let item of items) {
+                if (item.querySelector("a").href === url) {
+                    fileList.removeChild(item);
+                    break;
+                }
+            }
+        }
+        
