@@ -208,7 +208,7 @@ window.onclick = function(event) {
 };
 
 
-/ Función para mostrar el resumen del trámite
+// Función para mostrar el resumen del trámite
 function mostrarResumen() {
   const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
   // Actualizar el total en la sección de pago
