@@ -371,6 +371,7 @@
 <script type="module" src="./app.js"></script>
 <script type="module" src="./tabla.js"></script>
  
+ 
 <script>
   // Función para manejar el cambio de pestañas
   function showTab(tabId) {
@@ -416,7 +417,28 @@ document.addEventListener("DOMContentLoaded", function () {
     navLinksContainer.classList.toggle("active");
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const contactButton = document.getElementById("contact-button");
+    const contactMenu = document.getElementById("contact-menu");
+
+    if (contactButton && contactMenu) {
+        contactButton.addEventListener("click", function (event) {
+            event.stopPropagation();
+            contactMenu.style.display = contactMenu.style.display === "block" ? "none" : "block";
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!contactButton.contains(event.target) && !contactMenu.contains(event.target)) {
+                contactMenu.style.display = "none";
+            }
+        });
+    }
+});
+
 </script>
+
 
     <!-- Script de Zoho SalesIQ -->
     <script>
