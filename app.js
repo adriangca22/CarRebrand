@@ -206,3 +206,22 @@ window.onclick = function(event) {
     document.getElementById("modalInfo").style.display = "none";
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
