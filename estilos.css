@@ -1,7 +1,5 @@
 
 
-/* Aquí comienzan las demás reglas CSS */
-
 
 
 * {
@@ -169,7 +167,7 @@ tr:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
   /* Importar la fuente Roboto desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 
 * {
   margin: 0;
@@ -477,7 +475,6 @@ h1 {
 }
 
 /* Importar la fuente Roboto desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 * {
   margin: 0;
@@ -741,7 +738,7 @@ input:focus {
  ;  /* Asegurar que use Roboto */
 }
 /* Importar la fuente Roboto desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 
 * {
   margin: 0;
@@ -1062,7 +1059,7 @@ body {
  ;  /* Asegurar que use Roboto */
 }
 /* Importar la fuente Roboto desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 
 * {
   margin: 0;
@@ -1086,15 +1083,14 @@ body {
 }
 
 /* Encabezado principal */
-#main-navigation {
+#main-navigation { 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 10px; /* Reduce el padding general */
+  padding: 3px 10px; /* Reduce el padding general */
   background-color: #ffffff; /* Fondo blanco */
   color: black;
-  font-family:sans-serif ; 
- ;  /* Asegurar que use Roboto */
+  font-family: sans-serif;
 }
 
 .logo img {
@@ -1105,25 +1101,23 @@ body {
 /* Enlaces de navegación */
 .nav-links {
   display: flex;
-  gap: 15px;
+  gap: 10px; /* Reduce el espacio entre enlaces */
 }
 
 .nav-links a {
   color: rgb(54, 18, 18);
-  padding-inline: 20px;
+  padding-inline: 15px; /* Reduce un poco el espacio lateral */
   text-decoration: none;
   font-size: 15px; /* Tamaño ligeramente mayor */
-  font-family:sans-serif ; 
- ;  /* Cambiar a Roboto */
-  font-weight: 450; /* Cambiado a semibold */
+  font-family: sans-serif;
+  font-weight: 450; /* Más semibold */
   transition: color 0.1s;
 }
 
 .nav-links a:hover {
   color: #502626; /* Color del texto */
-  transform: scale(1.2); /* Aumenta el tamaño del texto */
+  transform: scale(1.1); /* Efecto hover más sutil */
 }
-
 
 /* Contenedor del botón de contacto */
 #contact-container {
@@ -1135,43 +1129,46 @@ body {
 #contact-button {
   background-color: #69322a;
   color: white;
-  padding: 10px 20px;
+  padding: 8px 18px; /* Reduce el padding */
   border: none;
-  border-radius: 20px;
+  border-radius: 18px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600; /* Más semibold */
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px; /* Reduce el espacio entre icono y texto */
   transition: background-color 0.3s, transform 0.3s;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 #contact-button i {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* Menú desplegable de contacto */
 #contact-menu {
   display: none;
   position: absolute;
-  top: 45px;
+  top: 40px;
   right: 0;
   background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  width: 150px;
-  z-index: 9999; /* Para superponerlo correctamente */
+  width: 140px; /* Reduce un poco el ancho */
+  z-index: 9999;
 }
 
 #contact-menu a {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px;
+  gap: 8px; /* Reduce el espacio entre icono y texto */
+  padding: 8px;
   text-decoration: none;
   color: #333;
+  font-size: 14px;
+  font-weight: 600; /* Más semibold */
   transition: background 0.3s;
 }
 
@@ -1364,16 +1361,16 @@ label {
   #main-navigation {
     flex-direction: column;
     align-items: flex-start;
-    padding: 10px;
+    padding: 6px;
   }
 
   .nav-links {
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
   }
 
   .nav-links a {
-    padding-inline: 10px;
+    padding-inline: 2px;
     font-size: 14px;
     font-family:sans-serif ; 
  ;  /* Cambiar a Roboto */
@@ -1699,3 +1696,58 @@ label {
 
 
 
+
+
+/* Estilo del menú desplegable */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  color: rgb(54, 18, 18);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 300; /* Menos grosor */
+  padding-inline: 15px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+  top: 100%; /* Evita superposición con el botón */
+  left: 0;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+  font-size: 13px;
+  font-weight: 300; /* Reducción del grosor */
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #f4f4f4;
+}
+
+/* Mostrar el menú al pasar el mouse */
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+  display: block;
+}
+
+/* Evitar que el menú desaparezca al hacer clic */
+.dropdown-content a:focus {
+  background-color: #e0e0e0;
+  outline: none;
+}
