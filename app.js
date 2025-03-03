@@ -208,71 +208,177 @@ window.onclick = function(event) {
 };
 
 
-// / Función para mostrar el resumen del trámite
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Función para mostrar el resumen del trámite
 function mostrarResumen() {
+  // Obtener el total de la sección de Precio
   const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
-  // Actualizar el total en la sección de pago
+
+  // Actualizar el total en la sección de Pago
   document.getElementById("pagoTotal").textContent = total.toFixed(2);
   document.getElementById("pagoTotalBoton").textContent = total.toFixed(2);
+
   // Mostrar el resumen
   alert(`Resumen del trámite:\nTotal a pagar: ${total.toFixed(2)} €`);
 }
 
-// Función para manejar el envío del formulario de pago con Stripe
-document.getElementById("formPago").addEventListener("submit", async function (event) {
+// Función para manejar el envío del formulario de pago
+document.getElementById("formPago").addEventListener("submit", function (event) {
   event.preventDefault(); // Evitar el envío del formulario
 
   // Validar los campos del formulario de pago
-  const nombreApellidos = document.getElementById("nombreApellidos").value.trim();
-  const telefono = document.getElementById("telefono").value.trim();
-  const total = parseFloat(document.getElementById("pagoTotal").textContent.replace(" €", "")) * 100; // Convertir a céntimos
+  const nombreApellidos = document.getElementById("nombreApellidos").value;
+  const telefono = document.getElementById("telefono").value;
+  const numeroTarjeta = document.getElementById("numeroTarjeta").value;
+  const fechaExpiracion = document.getElementById("fechaExpiracion").value;
+  const codigoSeguridad = document.getElementById("codigoSeguridad").value;
 
-  if (!nombreApellidos || !telefono || isNaN(total) || total <= 0) {
-    alert("Por favor, completa todos los campos y verifica el monto.");
+  if (!nombreApellidos || !telefono || !numeroTarjeta || !fechaExpiracion || !codigoSeguridad) {
+    alert("Por favor, completa todos los campos del formulario de pago.");
     return;
   }
 
-  try {
-    // Llamar a la API backend para crear una sesión de pago en Stripe
-    const response = await fetch("http://localhost:3000/crear-sesion-pago", { // Asegúrate de que esta URL sea correcta
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: Math.round(total), name: nombreApellidos, phone: telefono }),
-    });
+  // Simular el proceso de pago
+  const total = parseFloat(document.getElementById("pagoTotal").textContent);
+  alert(`Pago realizado con éxito.\nTotal pagado: ${total.toFixed(2)} €`);
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Error al procesar el pago");
-    }
-
-    const data = await response.json();
-
-    // Redirigir a la página de pago de Stripe
-    const stripe = Stripe("pk_live_51OpdmhJaeP6i0xi8L4uF5lVArUwuapOlJwbovJdBec1RqDfCJzjwoDJGiHC5pDypqOyOhHXfPlvjDEZRgorZpRko00oVTCI0Xb"); // Asegúrate de usar la clave pública correcta
-    stripe.redirectToCheckout({ sessionId: data.id });
-  } catch (error) {
-    console.error("Detalles del error:", error);
-    alert(`Error al procesar el pago: ${error.message}`);
-  }
+  // Limpiar el formulario después del pago
+  document.getElementById("formPago").reset();
+  document.getElementById("pagoTotal").textContent = "0.00";
+  document.getElementById("pagoTotalBoton").textContent = "0.00";
 });
 
 // Función para actualizar el total en la sección de pago
 function actualizarTotalPago() {
+  // Obtener el total de la sección de Precio
   const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
+
+  // Actualizar el total en la sección de Pago
   document.getElementById("pagoTotal").textContent = total.toFixed(2);
   document.getElementById("pagoTotalBoton").textContent = total.toFixed(2);
 }
 
 // Llamar a actualizarTotalPago cuando se calcule el precio
 document.getElementById("calcularPrecioBtn").addEventListener("click", function () {
-  calcularPrecioYGuardar(); // Solo realiza el cálculo
-  actualizarTotalPago();    // Actualiza el total en la vista
+  calcularPrecioYGuardar();
+  actualizarTotalPago(); // Actualizar el total en la sección de pago
 });
 
+// Asociar el botón "Ver resumen del trámite" a la función mostrarResumen
+document.getElementById("verResumenBtn").addEventListener("click", mostrarResumen);
 
+// Función para calcular el precio y guardar en Firebase
+async function calcularPrecioYGuardar() {
+  console.log("Función calcularPrecioYGuardar llamada"); // Depuración
 
+  // Primero calcula los precios
+  calcularPrecioSinGuardar();
 
+  // Obtener los valores del formulario
+  const fechaMatriculacion = document.getElementById("fechaMatriculacion")?.value;
+  const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador")?.value;
+  const precioContrato = parseFloat(document.getElementById("precioContrato")?.value);
+  const combustible = document.getElementById("combustible")?.value;
+  const correo = document.getElementById("correo")?.value;
+  const marca = document.getElementById("marca")?.value;
+  const modelo = document.getElementById("modelo")?.value;
 
+  // Obtener los valores calculados
+  const valorFiscal = parseFloat(document.getElementById("valorFiscal").textContent.replace(" €", ""));
+  const impuesto = parseFloat(document.getElementById("impuesto").textContent.replace(" €", ""));
+  const total = parseFloat(document.getElementById("total").textContent.replace(" €", ""));
+
+  // Guardar los datos en Firebase
+  const nuevoRegistro = {
+    FechaMatriculacion: fechaMatriculacion,
+    ComunidadAutonoma: comunidadAutonoma,
+    Combustible: combustible,
+    Correo: correo,
+    Marca: marca,
+    Modelo: modelo,
+    PrecioContrato: precioContrato,
+    ValorFiscal: valorFiscal,
+    ITP: impuesto,
+    Total: total,
+    FechaRegistro: new Date().toISOString()
+  };
+
+  try {
+    // Guardar el registro en Firebase
+    await addDoc(vehiculosCollection, nuevoRegistro);
+    console.log("Datos guardados correctamente en Firebase.");
+    listarVehiculos(); // Actualizar la tabla después de guardar
+  } catch (error) {
+    console.error("Error al guardar en Firebase:", error.message || error);
+    alert("Hubo un error al guardar los datos. Detalles: " + (error.message || error));
+  }
+
+  showTab('precio');
+}
+
+// Función para calcular el precio sin guardar en Firebase
+function calcularPrecioSinGuardar() {
+  const fechaMatriculacion = document.getElementById("fechaMatriculacion")?.value;
+  const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador")?.value;
+  const precioContrato = parseFloat(document.getElementById("precioContrato")?.value);
+  const marca = document.getElementById("marca")?.value;
+  const modelo = document.getElementById("modelo")?.value;
+
+  if (!validarFormulario()) {
+    return;
+  }
+
+  // Valor base de Hacienda específico para el modelo Abarth 124 Spider TB Multiair 6V
+  const valorBaseHacienda = 32800; // Valor de tablas de Hacienda para el modelo específico
+
+  // Calcular la antigüedad
+  const antigüedad = new Date().getFullYear() - new Date(fechaMatriculacion).getFullYear();
+
+  // Obtener el coeficiente de depreciación según la antigüedad
+  const depreciacion = coeficientesDepreciacionVehiculos.find(c => antigüedad >= c.años)?.coef || 0.10;
+
+  // Calcular el valor fiscal
+  const valorFiscal = calcularValorVenal(valorBaseHacienda, fechaMatriculacion, comunidadAutonoma);
+
+  // Calcular el ITP (4% sobre el valor más alto entre el precio de compraventa y el valor fiscal)
+  const porcentajeITP = 4;
+  const baseITP = Math.max(precioContrato, valorFiscal); // Usar el valor más alto
+  const impuesto = calcularITP(baseITP, porcentajeITP);
+
+  // Calcular el total (incluyendo tasas DGT, gestión, IVA y costos adicionales)
+  const tasasDGT = 55.70;
+  const gestion = 61.36;
+  const iva = 12.89;
+  const costoAdicional1 = 12; // Ejemplo: Seguro temporal
+  const costoAdicional2 = 9.90; // Ejemplo: Otro servicio
+  const total = tasasDGT + gestion + iva + impuesto + costoAdicional1 + costoAdicional2;
+
+  // Mostrar resultados en la interfaz
+  document.getElementById("tasasDGT").textContent = `${tasasDGT.toFixed(2)} €`;
+  document.getElementById("gestion").textContent = `${gestion.toFixed(2)} €`;
+  document.getElementById("iva").textContent = `${iva.toFixed(2)} €`;
+  document.getElementById("impuesto").textContent = `${impuesto.toFixed(2)} €`;
+  document.getElementById("total").textContent = `${total.toFixed(2)} €`;
+
+  // Actualizar el modal con los valores calculados
+  actualizarModal(valorBaseHacienda, depreciacion, valorFiscal, impuesto);
+}
 
 
 
