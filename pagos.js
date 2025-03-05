@@ -1,3 +1,6 @@
+// Agrega SweetAlert2 desde un CDN en tu archivo HTML
+// <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 // Función para mostrar el resumen del trámite
 function mostrarResumen() {
   // Obtener el total de la sección de Precio
@@ -24,35 +27,40 @@ document.getElementById("formPago").addEventListener("submit", async function (e
   const telefono = document.getElementById("telefono").value;
 
   if (!nombreApellidos || !telefono) {
-    alert("Por favor, completa todos los campos del formulario de pago.");
+    Swal.fire({
+      icon: "error",
+      title: "Campos incompletos",
+      text: "Por favor, completa todos los campos del formulario de pago.",
+    });
     return;
   }
 
   // Obtener el total a pagar
   const total = parseFloat(document.getElementById("pagoTotal").textContent);
 
-  // Cargar Stripe
-  const stripe = await cargarStripe();
+  // Simular el proceso de pago (sin integración real de Stripe por ahora)
+  try {
+    // Aquí puedes agregar la lógica real de Stripe más adelante
+    console.log("Simulando pago por:", total.toFixed(2), "€");
 
-  // Crear una sesión de pago en el backend
-  const response = await fetch("/crear-sesion-pago", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: Math.round(total * 100) }), // Convertir a céntimos
-  });
+    // Mostrar mensaje de éxito con SweetAlert2
+    Swal.fire({
+      icon: "success",
+      title: "¡Pago realizado correctamente!",
+      text: `El pago de ${total.toFixed(2)} € se ha procesado exitosamente.`,
+      confirmButtonText: "Aceptar",
+    });
 
-  const session = await response.json();
-
-  if (session.error) {
-    alert(session.error);
-    return;
-  }
-
-  // Redirigir al usuario al checkout de Stripe
-  const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
-
-  if (error) {
-    alert(`Error al redirigir al checkout: ${error.message}`);
+    // Limpiar el formulario después del pago
+    document.getElementById("formPago").reset();
+    document.getElementById("pagoTotal").textContent = "0.00";
+    document.getElementById("pagoTotalBoton").textContent = "0.00";
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error al procesar el pago",
+      text: "Hubo un problema al realizar el pago. Por favor, inténtalo más tarde.",
+    });
   }
 });
 

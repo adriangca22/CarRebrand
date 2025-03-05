@@ -4,7 +4,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Burocracia Cero</title>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
@@ -281,13 +281,12 @@
       </form>
     </div>
 
-
     <div id="modalDocumento" class="modal" style="display: none;">
       <div id="cerrarModalDocumento" class="modal-overlay"></div> <!-- Fondo del modal -->
       <div class="modal-content">
         <div class="modal-header">
           <img src="logo.png" alt="Logo de Burocracia" class="logo"> <!-- Logo -->
-          <button id="cerrarModalDocumentoBtn" class="close-button">✖</button> <!-- Botón de cerrar -->
+  
         </div>
         <div class="modal-body" id="documentoPreview">
           <!-- Aquí se mostrarán los datos dinámicamente -->
@@ -295,7 +294,6 @@
         <button id="descargarPDFBtn" class="modal-button">Descargar PDF</button>
       </div>
     </div>
-    
     
 
     <div id="documentos" class="tab-content">
