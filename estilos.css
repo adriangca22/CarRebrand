@@ -1469,9 +1469,6 @@ label {
 
 
 
-/* Importar la fuente Roboto desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
-
 /* Modal */
 .modal {
   display: none;
@@ -1504,15 +1501,32 @@ label {
 /* Modal Header */
 .modal-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  position: relative; /* Permite posicionar el botón de cierre */
-  border-bottom: 2px solid #f0f0f0;
-  padding-bottom: 1.2rem;
-  margin-bottom: 1.2rem;
-  font-family:sans-serif ; 
- ;  /* Asegurar que use Roboto */
+  align-items: center;
+  position: relative;
 }
+
+.close-button {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 
 /* Reducir tamaño del título */
 .modal-header h2 {
@@ -1636,7 +1650,7 @@ label {
 }
 
 /* Importar Font Awesome */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+
 
 /* Estilo general para los grupos de inputs */
 .input-group {
@@ -1750,4 +1764,77 @@ label {
 .dropdown-content a:focus {
   background-color: #e0e0e0;
   outline: none;
+}
+
+/* Estilos únicos para el grupo de inputs */
+.custom-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px; /* Ajusta según sea necesario */
+}
+
+/* Ocultar etiquetas para screen readers */
+.custom-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Contenedor de la fecha con ícono */
+.custom-fecha-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Estilo del input de fecha */
+.custom-fecha-input {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* Espacio para el ícono */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  box-sizing: border-box;
+  height: 40px; /* Altura fija para alinear el ícono */
+}
+
+/* Estilo del ícono de calendario */
+.custom-fecha-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Evita que el ícono interfiera con el clic en el input */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; /* Ancho del ícono */
+  height: 20px; /* Alto del ícono */
+}
+
+.custom-icon {
+  width: 100%; /* Ajusta el tamaño del SVG al contenedor */
+  height: 100%;
+  color: #666; /* Color del ícono */
+}
+
+/* Estilo del input de CVV */
+.custom-cvv-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  box-sizing: border-box;
+  height: 40px; /* Altura fija para mantener consistencia */
 }
