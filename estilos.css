@@ -36,6 +36,7 @@ h1 {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
 }
 
 .card-form label {
@@ -1837,4 +1838,201 @@ label {
   color: #333;
   box-sizing: border-box;
   height: 40px; /* Altura fija para mantener consistencia */
+}
+
+
+.secure-container {
+  max-width: 320px;
+  position: absolute;
+  top: 150px;
+  right: 20px;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 25px;
+}
+
+.secure-title {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.secure-text {
+  font-size: 13px;
+  color: #666;
+}
+
+.secure-rating {
+  margin: 8px 0;
+}
+
+.secure-rating i {
+  color: #FFD700;
+  font-size: 14px;
+}
+
+.secure-review {
+  font-size: 10px;
+  color: #777;
+}
+
+.secure-payment-section {
+  margin-top: 15px;
+}
+
+.secure-payment-title {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.secure-payment-icons i {
+  font-size: 20px;
+  margin: 3px;
+  color: #555;
+}
+
+/* Media Queries para tablets y móviles */
+@media (max-width: 768px) {
+  .secure-container {
+    position: relative; /* Cambia a posición relativa */
+    max-width: 90%; /* Ocupa el 90% del ancho de la pantalla */
+    margin: 20px auto; /* Centra el contenedor */
+    top: 0; /* Restablece la posición superior */
+    right: 0; /* Restablece la posición derecha */
+  }
+
+  .secure-title {
+    font-size: 16px; /* Reducir el tamaño de la fuente para tablets y móviles */
+  }
+
+  .secure-text {
+    font-size: 12px; /* Reducir el tamaño de la fuente para tablets y móviles */
+  }
+
+  .secure-rating i {
+    font-size: 12px; /* Reducir el tamaño de los íconos de rating */
+  }
+
+  .secure-review {
+    font-size: 9px; /* Reducir el tamaño de la fuente para tablets y móviles */
+  }
+
+  .secure-payment-title {
+    font-size: 12px; /* Reducir el tamaño de la fuente para tablets y móviles */
+  }
+
+  .secure-payment-icons i {
+    font-size: 16px; /* Reducir el tamaño de los íconos de pago */
+  }
+}
+
+/* Media Queries para dispositivos muy pequeños (ej: móviles en orientación vertical) */
+@media (max-width: 480px) {
+  .secure-container {
+    padding: 10px; /* Reducir el padding para pantallas muy pequeñas */
+  }
+
+  .secure-title {
+    font-size: 14px; /* Reducir aún más el tamaño de la fuente */
+  }
+
+  .secure-text {
+    font-size: 11px; /* Reducir el tamaño de la fuente */
+  }
+
+  .secure-rating i {
+    font-size: 10px; /* Reducir el tamaño de los íconos de rating */
+  }
+
+  .secure-review {
+    font-size: 8px; /* Reducir el tamaño de la fuente */
+  }
+
+  .secure-payment-title {
+    font-size: 11px; /* Reducir el tamaño de la fuente */
+  }
+
+  .secure-payment-icons i {
+    font-size: 14px; /* Reducir el tamaño de los íconos de pago */
+  }
+}
+
+
+
+
+
+/* Estilos únicos para la sección de gestoría */
+.gestoria-section {
+  max-width: 800px; /* Ancho máximo de la sección */
+  margin: 40px auto; /* Centrar la sección */
+  padding: 20px;
+  background: white; /* Fondo claro */
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  text-align: center; /* Centrar el texto */
+  margin-top: 200px;
+}
+
+.gestoria-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.gestoria-text {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6; /* Espaciado entre líneas */
+  margin-bottom: 20px;
+}
+
+.gestoria-images {
+  display: flex;
+  flex-direction: column; /* Las imágenes se apilan verticalmente */
+  align-items: center; /* Centrar las imágenes horizontalmente */
+  gap: 20px; /* Espacio entre las imágenes */
+}
+
+.gestoria-img {
+  max-width: 80%; /* Reducir el tamaño de las imágenes */
+  height: auto;
+  border-radius: 10px; /* Bordes redondeados para las imágenes */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Media Queries para hacer la sección responsive */
+@media (max-width: 768px) {
+  .gestoria-section {
+    padding: 15px;
+  }
+
+  .gestoria-title {
+    font-size: 20px; /* Reducir el tamaño del título en pantallas pequeñas */
+  }
+
+  .gestoria-text {
+    font-size: 14px; /* Reducir el tamaño del texto en pantallas pequeñas */
+  }
+
+  .gestoria-img {
+    max-width: 90%; /* Ajustar el tamaño de las imágenes en tablets y móviles */
+  }
+}
+
+@media (max-width: 480px) {
+  .gestoria-title {
+    font-size: 18px; /* Reducir aún más el tamaño del título */
+  }
+
+  .gestoria-text {
+    font-size: 13px; /* Reducir aún más el tamaño del texto */
+  }
+
+  .gestoria-img {
+    max-width: 100%; /* Ajustar el tamaño de las imágenes en móviles pequeños */
+  }
 }
