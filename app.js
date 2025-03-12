@@ -1,10 +1,3 @@
-// Importa las funciones necesarias desde Firebase y otros módulos
-import { app, db } from "./firebase.js"; // Asegúrate de que en firebase.js esté correctamente inicializado Firebase
-import { collection, getDocs, addDoc } from "firebase/firestore";
-
-// Referencia a la colección de vehículos
-const vehiculosCollection = collection(db, "Vehículo");
-
 // Coeficientes de depreciación para vehículos de turismo, todo terreno, quads, motocicletas
 const coeficientesDepreciacionVehiculos = [
   { años: 1, coef: 1.0 }, // 100%
@@ -45,33 +38,6 @@ const coeficientesComunidad = {
   "Melilla": 0.80
 };
 
-// Función para listar vehículos
-async function listarVehiculos() {
-  const tbody = document.getElementById("tablaVehiculos").querySelector("tbody");
-  tbody.innerHTML = "";
-
-  try {
-    const querySnapshot = await getDocs(vehiculosCollection);
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      const row = `
-        <tr>
-          <td>${data.FechaMatriculacion}</td>
-          <td>${data.ComunidadAutonoma}</td>
-          <td>${data.Combustible}</td>
-          <td>${data.Correo}</td>
-          <td>${data.Marca}</td>
-          <td>${data.Modelo}</td>
-          <td>${data.PrecioContrato}</td>
-        </tr>
-      `;
-      tbody.innerHTML += row;
-    });
-  } catch (error) {
-    console.error("Error al listar los vehículos:", error);
-  }
-}
-
 // Función para calcular el valor venal de vehículos
 function calcularValorVenal(valorBase, fechaMatriculacion, comunidad) {
   let añoActual = new Date().getFullYear();
@@ -109,8 +75,8 @@ function actualizarModal(valorHacienda, depreciacion, valorFiscal, itp) {
   }
 }
 
-// Función para calcular el precio final y enviar datos a Firebase
-async function calcularPrecio() {
+// Función para calcular el precio final
+function calcularPrecio() {
   const fechaMatriculacion = document.getElementById("fechaMatriculacion").value;
   const comunidadAutonoma = document.getElementById("comunidadAutonomaComprador").value;
   const precioContrato = parseFloat(document.getElementById("precioContrato").value);
@@ -152,30 +118,11 @@ async function calcularPrecio() {
   // Actualizar el modal con los valores calculados
   actualizarModal(valorBaseHacienda, depreciacion, valorFiscal, impuesto);
 
-  // Guardar los datos en Firebase
-  const nuevoRegistro = {
-    FechaMatriculacion: fechaMatriculacion,
-    ComunidadAutonoma: comunidadAutonoma,
-    PrecioContrato: precioContrato,
-    ValorFiscal: valorFiscal,
-    ITP: impuesto,
-    Total: total,
-    FechaRegistro: new Date().toISOString()
-  };
-
-  try {
-    await addDoc(vehiculosCollection, nuevoRegistro);
-    listarVehiculos(); // Actualizar la tabla después de guardar
-  } catch (error) {
-    console.error("Error al guardar en Firebase:", error);
-  }
-
   showTab('precio');
 }
 
 // Asociar eventos a botones y formularios
 document.getElementById("calcularPrecioBtn").addEventListener("click", calcularPrecio);
-document.addEventListener("DOMContentLoaded", listarVehiculos);
 
 // Función para cambiar de pestañas
 function showTab(tabId) {
@@ -203,10 +150,6 @@ window.onclick = function(event) {
     document.getElementById("modalInfo").style.display = "none";
   }
 };
-
-
-
-
 
 
 

@@ -3,7 +3,8 @@
 <html lang="es">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Burocracia Cero</title>
+  <title>Adrian Desingn</title>
+  <script src="https://js.stripe.com/v3/"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -39,12 +40,12 @@
     }
 
     .tab-button:hover {
-      color: #7a3b3b; 
+      color: #2E5A88; 
     }
 
     .tab-button.active {
       color: #ffffff; /* Texto blanco para la pestaña activa */
-      background-color: #502626; /* Fondo azul para la pestaña activa */
+      background-color: #2E5A88; /* Fondo azul para la pestaña activa */
       border-bottom: none; /* Quitar el borde inferior en la pestaña activa */
     }
 
@@ -68,29 +69,11 @@
     <a href="#" class="logo">
         <img src="/logo.png" alt="Logotipo de la empresa">
     </a>
-    <div class="nav-links">
-        <a href="https://burocraciacero.com/">Inicio</a>
-        <a href="https://burocraciacero.com/como-funciona">Cómo Funciona</a>
-    
-        
-        <!-- Menú desplegable de Servicios -->
-        <div class="dropdown">
-            <a href="#" class="dropbtn">Servicios ▾</a>
-            <div class="dropdown-content">
-              <a href="https://transferencia.burocraciacero.com/">Transferencia de Vehículos</a>
-                <a href="https://burocraciacero.com/cancelacion-de-dominio">Cancelación de dominio</a>
-                <a href="https://burocraciacero.com/duplicado-de-carnet">Duplicado de carnet</a>
-                <a href="https://etiquetadgt.burocraciacero.com/producto/distintivo-ambiental-b-c-eco-o-cero-para-tu-coche-o-moto/">Etiqueta ambiental</a>
-       
-            </div>
-        </div>
-
-        <a href="https://burocraciacero.com/faq">FAQ</a>
-    </div>
+    <h2 class="animacion-titulo">CarRebrand</h2>
 
     <!-- Contenedor del botón de contacto -->
     <div id="contact-container">
-        <button id="contact-button">Contáctenos</button>
+        <button id="contact-button">Contáctame</button>
         <div id="contact-menu">
             <a href="https://wa.me/XXXXXXXXXXX" target="_blank">
                 <i class="fa-brands fa-whatsapp"></i> WhatsApp
@@ -115,49 +98,21 @@
   </div>
   
     </div>
-    <div class="secure-container">
-      <!-- Sección informativa -->
-      <div class="secure-info-section">
-        <h2 class="secure-title">Cambio de titular de tu vehículo completamente online</h2>
-        
-        <p class="secure-text">
-          Tus pagos están protegidos con encriptación SSL para garantizar la máxima seguridad.
-        </p>
-    
-        <!-- Estrellas de calificación -->
-        <div class="secure-rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <p class="secure-review">4.4 - 504 opiniones</p>
-    
-        <!-- Sección de pago seguro -->
-        <div class="secure-payment-section">
-          <h3 class="secure-payment-title">Pago 100% Seguro</h3>
-          <p class="secure-payment-text"></p>
-          <div class="secure-payment-icons">
-            <i class="fab fa-cc-visa"></i>
-            <i class="fab fa-cc-mastercard"></i>
-            <i class="fab fa-cc-amex"></i>
-            <i class="fab fa-cc-paypal"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+   
 
   <div class="card-form">
     <div class="tab-container">
-      <button class="tab-button" onclick="showTab('vehiculo')">1.Vehículo</button>
-      <button class="tab-button" onclick="showTab('precio')">2.Precio</button>
-      <button class="tab-button" onclick="showTab('pago')">3.Pago</button>
-      <button class="tab-button" onclick="showTab('documentos')">4.Documentos</button>
+      <button class="tab-button" onclick="showTab('vehiculo')">.Vehículo</button>
+      <button class="tab-button" onclick="showTab('precio')">Precio</button>
+      <button class="tab-button" onclick="showTab('documentos')">Documentos</button>
+      <button class="tab-button" onclick="showTab('pago')">Pago</button>
+    
     </div>
   
     <div id="vehiculo" class="tab-content active-tab">
+
       <img src="/car-citroen-vehicle-2-svgrepo-com.svg" alt="Vehículo" width="60" height="64">
+    
   
       <form id="formVehiculo">
         <!-- Fecha de Matriculación -->
@@ -201,7 +156,8 @@
        
         <input type="number" id="precioContrato" name="precioContrato" placeholder="Precio de compraventa (€)" required>
       </form>
-      <button type="button" id="calcularPrecioBtn" class="pepe">Calcular precio</button>
+      <button type="button" id="calcularPrecioBtn"  style="background-color: rgb(35, 59, 138); color: white; border: none; padding: 10px 20px; display: inline-block; cursor: pointer;">
+        Calcular precio</button>
     </div>
 
     <div id="precio" class="tab-content">
@@ -227,7 +183,12 @@
        
       
           <p><strong>Total:</strong> <span id="total">129.95 €</span></p>
+       
         </div>
+        <button type="button" class="btn-mas-tarde" onclick="showTab('documentos')" 
+        style="background-color: rgb(35, 59, 138); color: white; border: none; padding: 10px 20px; display: inline-block; cursor: pointer;">
+        Siguiente
+      </button>
       </form>
     </div>
     
@@ -238,84 +199,22 @@
         <h3>Impuesto de transmisiones</h3>
         <p>El Impuesto sobre Transmisiones Patrimoniales (ITP) es un tributo que el comprador debe abonar a Hacienda en los cambios de titular de un vehículo entre particulares.</p>
         <p>Se calcula aplicando un porcentaje, que varía según la comunidad autónoma del comprador, al valor más alto entre el precio acordado de compraventa y el valor venal del vehículo según las tablas de Hacienda.</p>
+        
         <h4>Cálculo del impuesto</h4>
-        <ul>
-          <li>Valoración tablas hacienda: <span id="valorHacienda">16200 €</span></li>
-          <li>Porcentaje de depreciación: <span id="depreciacion">34 %</span></li>
-          <li>Valor fiscal: <span id="valorFiscal">0.00 €</span></li>
-          <li>ITP calculado: <span id="itpCalculado">0.00 €</span></li>
+        <ul class="calculo-lista">
+          <li>Valoración tablas hacienda: <strong><span id="valorHacienda">0.00 €</span></strong></li>
+          <li>Porcentaje de depreciación: <strong><span id="depreciacion">0%</span></strong></li>
+          <li>Valor fiscal: <strong><span id="valorFiscal">0.00 €</span></strong></li>
+          <li>ITP (4%): <strong><span id="itpCalculado">0.00 €</span></strong></li>
         </ul>
       </div>
     </div>
-    <div id="pago" class="tab-content">
-      <h2>Pago</h2>
-      <form id="formPago">
-        <div class="pago-datos">
-          <label for="nombreApellidos">Nombre y Apellidos</label>
-          <input type="text" id="nombreApellidos" name="nombreApellidos" placeholder="Nombre y Apellidos" required>
-    
-          <label for="telefono">Teléfono</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
-    
-          <!-- Correo -->
-          <label for="correo">Correo</label>
-          <input type="email" id="correo" name="correo" placeholder="Correo" required>
-    
-          <button type="button" id="verResumenBtn">Ver resumen del trámite</button>
-        </div>
-    
-        <div class="pago-resumen">
-          <p><strong>Total a pagar: <span id="pagoTotal">0.00</span> €</strong></p>
-    
-          <ul>
-            <li><strong>Garantía de devolución</strong></li>
-            <li><strong>Envío gratuito</strong></li>
-            <li><strong>Atención 24/7</strong></li>
-          </ul>
-    
-          <p><strong>Tarjeta de crédito:</strong></p>
-    
-          <!-- Campo de número de tarjeta con iconos Visa y MasterCard -->
-          <div class="input-group">
-            <i class="fa-brands fa-cc-visa"></i>
-            <i class="fa-brands fa-cc-mastercard"></i>
-            <input type="text" id="numeroTarjeta" placeholder="Número de tarjeta (1234 5678 9012 3456)" required>
-          </div>
-          <div class="custom-input-group">
-            <label for="fechaExpiracion" class="custom-sr-only">Fecha de expiración</label>
-            <div class="custom-fecha-container">
-              <input type="date" id="fechaExpiracion" name="fechaExpiracion" class="custom-fecha-input" required placeholder="dd/mm/yyyy">
-              <span class="custom-fecha-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="custom-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-       
-                </svg>
-              </span>
-            </div>
-            <label for="codigoSeguridad" class="custom-sr-only">Código de seguridad</label>
-            <input type="text" id="codigoSeguridad" class="custom-cvv-input" placeholder="CVV" maxlength="3" required>
-          </div>
-    
-          <button type="submit">Tramitar <span id="pagoTotalBoton">0.00</span> €</button>
-        </div>
-      </form>
-    </div>
 
-    <div id="modalDocumento" class="modal" style="display: none;">
-      <div id="cerrarModalDocumento" class="modal-overlay"></div> <!-- Fondo del modal -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <img src="logo.png" alt="Logo de Burocracia" class="logo"> <!-- Logo -->
-  
-        </div>
-        <div class="modal-body" id="documentoPreview">
-          <!-- Aquí se mostrarán los datos dinámicamente -->
-        </div>
-        <button id="descargarPDFBtn" class="modal-button">Descargar PDF</button>
-      </div>
-    </div>
-    
 
-    <div id="documentos" class="tab-content">
+
+
+
+     <div id="documentos" class="tab-content">
       <h2>Documentos</h2>
       <p><strong>Adjuntar documentación</strong></p>
       <p style="font-size: 13px;">Ten preparada la siguiente documentación, te la pediremos:</p>
@@ -353,25 +252,81 @@
       <ul id="fileList"></ul>
   
       <div class="documento-opciones">
-          <button type="button" class="btn-mas-tarde">Más tarde</button>
+          <button type="button" class="btn-mas-tarde" onclick="showTab('pago')">Más tarde</button>
       </div>
   </div>
+  <div id="pago" class="tab-content">
+    <h2>Pago</h2>
+    <form id="formPago">
+      <div class="pago-datos">
+        <label for="nombreApellidos">Nombre y Apellidos</label>
+        <input type="text" id="nombreApellidos" name="nombreApellidos" placeholder="Nombre y Apellidos" required>
+  
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+        <!-- Correo -->
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" name="correo" placeholder="Correo" required>
+
+        <button type="button" id="verResumenBtn">Ver resumen del trámite</button>
+      </div>
+  
+      <div class="pago-resumen">
+        <p><strong>Total a pagar: <span id="pagoTotal">0.00</span> €</strong></p>
+  
+        <ul>
+          <li><strong>Garantía de devolución</strong></li>
+          <li><strong>Envío gratuito</strong></li>
+          <li><strong>Atención 24/7</strong></li>
+        </ul>
+  
+        <p><strong>Tarjeta de crédito:</strong></p>
+        <input type="text" id="numeroTarjeta" placeholder="Número de tarjeta" required>
+        <input type="text" id="fechaExpiracion" placeholder="Fecha de expiración" required>
+        <input type="text" id="codigoSeguridad" placeholder="Código de seguridad" required>
+  
+        <button type="submit">Tramitar <span id="pagoTotalBoton">0.00</span> €</button>
+      </div>
+    </form>
+  </div>
+
+  
+
+    <div id="modalDocumento" class="modal" style="display: none;">
+      <div id="cerrarModalDocumento" class="modal-overlay"></div> <!-- Fondo del modal -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <img src="logo.png" alt="Logo de Burocracia" class="logo"> <!-- Logo -->
+  
+        </div>
+        <div class="modal-body" id="documentoPreview">
+          <!-- Aquí se mostrarán los datos dinámicamente -->
+        </div>
+        <button id="descargarPDFBtn" class="modal-button">Descargar PDF</button>
+      </div>
+    </div>
+    
+
+   
  
 
 </header>
 <div class="gestoria-section">
-  <h2 class="gestoria-title">¿Qué es una Gestoría Online de transferencia de vehículos?</h2>
+  <h2 class="gestoria-title">CarRebrand: Rename, Revalue, Sell</h2>
   <p class="gestoria-text">
-    Una gestoría online de transferencia de vehículos es una asesoría especializada que se encarga de gestionar todos los trámites relacionados con el cambio de nombre o titularidad de un vehículo, ya sea coche o moto, sin necesidad de desplazarte, sin citas previas y sin esperar en colas. Todo el proceso con la DGT se realiza a través de Internet. Además, toda la documentación te llegará directamente a tu domicilio, ya seas particular o empresa.
+    Calcula el valor venal y los valores de Hacienda para vender tu vehículo al mejor precio.
+    <br> <br>  Explicación:
+"CarRebrand": Hace referencia a la capacidad de cambiar el nombre del vehículo (re-branding) para hacerlo más atractivo al vender. <br> <br>
+
+ Resume las tres funciones principales de la app: renombrar el vehículo, recalcular su valor y facilitar la venta.
+ la app permite calcular el valor venal y los valores de Hacienda, lo cual es clave para vender un vehículo de manera informada y eficiente.
   </p>
-  <div class="gestoria-images">
-    <img src="ani.png" alt="Imagen 1" class="gestoria-img">
-    <img src="ani2.png" alt="Imagen 2" class="gestoria-img">
+
   </div>
 </div>
 
 </h2>
-<h1 style="color: white;"> Conoce otros servicios de Burocracia Cero</h1>
+<h1 style="color: white;"> Servicios que incluye la App</h1>
 <h2 style="color: white; font-size: 15px; text-align: center; margin-bottom: 50px;">
  
   <br>
@@ -382,25 +337,26 @@
     
     
     <div class="price-card">
-        <i class="fas fa-ban icon" style="color: #5e2c2c; font-size: 24px;"></i>
-        <h3>Servicio de Cancelación de Dominio</h3>
-        <p class="price-details">Paquete completo<br>Envío incluido<br>Incluye gestión de ITP</p>
-        <button class="price-button" onclick="window.open('https://burocraciacero.com/cancelacion-de-dominio', '_blank')">Más info</button>
+        <i class="fas fa-money-bill-wave" style="color: #2E5A88;  font-size: 24px;"></i>
+        <h3>Calcula el Precio Total de tu Transferencia</h3>
+        <p class="price-details">Obtén el valor venal de Hacienda y el precio total de tu vehículo en segundos.</p>
+        
     </div>
     
     <div class="price-card">
-        <i class="fas fa-tag icon" style="color: #5e2c2c; font-size: 24px;"></i>
-        <h3>Servicio de Etiqueta Ambiental DGT</h3>
-        <p class="price-details">Paquete completo<br>Envío incluido<br>Incluye gestión de ITP</p>
-        <button class="price-button" onclick="window.open('https://etiquetadgt.burocraciacero.com/', '_blank')">Más info</button>
+        <i class="fas fa-file-pdf" style="color: #2E5A88;  font-size: 24px;"></i>
+        <h3>Sube tus Documentos de Forma Segura</h3>
+        <p class="price-details">Carga y gestiona todos los documentos necesarios para la transferencia de manera rápida y sencilla.</p>
+        
     </div>
     
     <div class="price-card">
-        <i class="fas fa-id-card icon" style="color: #5e2c2c; font-size: 24px;"></i>
-        <h3>Servicio de Duplicado de Carnet</h3>
-        <p class="price-details">Paquete completo<br>Envío incluido<br>Incluye gestión de ITP</p>
-        <button class="price-button" onclick="window.open('https://burocraciacero.com/duplicado-de-carnet', '_blank')">Más info</button>
+        <i  class="fas fa-wallet" style="color: #2E5A88; font-size: 24px;"></i>
+        <h3>Pago Rápido y Seguro</h3>
+        <p class="price-details">Realiza el pago de tu transferencia vehicular de forma fácil y con total confianza.</p>
+     
     </div>
+    
 </div>
 
 </div>
@@ -411,39 +367,57 @@
  
  
 <script>
-  // Función para manejar el cambio de pestañas
-  function showTab(tabId) {
-    const tabs = document.querySelectorAll('.tab-content');
-    const buttons = document.querySelectorAll('.tab-button');
+ 
 
-    // Ocultar todas las secciones y eliminar la clase 'active' de los botones
-    tabs.forEach(tab => tab.classList.remove('active-tab'));
-    buttons.forEach(button => button.classList.remove('active'));
+ const tabOrder = ['vehiculo', 'precio', 'documentos', 'pago'];
 
-    // Mostrar la sección seleccionada
-    const selectedTab = document.getElementById(tabId);
-    if (selectedTab) {
-      selectedTab.classList.add('active-tab');
-    }
+function showTab(tabId) {
+  const tabs = document.querySelectorAll('.tab-content');
+  const buttons = document.querySelectorAll('.tab-button');
 
-    // Marcar la pestaña correspondiente como activa
-    const activeButton = document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`);
-    if (activeButton) {
-      activeButton.classList.add('active');
-    }
+  // Ocultar todas las secciones y desactivar botones
+  tabs.forEach(tab => tab.classList.remove('active-tab'));
+  buttons.forEach(button => button.classList.remove('active'));
+
+  // Mostrar la pestaña seleccionada
+  document.getElementById(tabId)?.classList.add('active-tab');
+
+  // Marcar el botón activo
+  document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`)?.classList.add('active');
+
+  // Guardar la pestaña activa en el atributo del body
+  document.body.setAttribute('data-active-tab', tabId);
+}
+
+function nextTab() {
+  const currentTab = document.body.getAttribute('data-active-tab') || 'vehiculo';
+  const currentIndex = tabOrder.indexOf(currentTab);
+
+  if (currentIndex !== -1 && currentIndex < tabOrder.length - 1) {
+    showTab(tabOrder[currentIndex + 1]);
   }
+}
 
-  // Inicializar las funciones al cargar el DOM
-  document.addEventListener("DOMContentLoaded", () => {
-    // Mostrar la primera pestaña por defecto
-    showTab('vehiculo');
+document.addEventListener("DOMContentLoaded", () => {
+  showTab('vehiculo'); // Iniciar en la primera pestaña sin recargas
+});
 
-  
 
-    // Inicializar autocompletados
-    initializeAutocomplete();
-  });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
   // Función para inicializar autocompletados
 
  // script.js
@@ -479,49 +453,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     <!-- Script de Zoho SalesIQ -->
-    <script>
-      window.$zoho = window.$zoho || {};
-      window.$zoho.salesiq = window.$zoho.salesiq || { ready: function() {} };
-
-      (function() {
-          var d = document;
-          var s = d.createElement("script");
-          s.src = "https://salesiq.zohopublic.eu/widget?wc=siq45ca2ee213a30162bc0b1cd88d271ebca1e8b1b631be7969995062c80d04bfa95c8dcf3a8994897cd11ade72f04cc865";
-          s.defer = true;
-          d.getElementsByTagName("body")[0].appendChild(s);
+    <script type="text/javascript">
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/67d1e72af0010819121bfa9c/1im5uu0j1';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
       })();
-  </script>
+      </script>
 </body>
 <footer>
   <div class="footer-container">
       <div class="footer-logo">
-          <img src="buro.png" alt="Burocracia Cero">
-          <p>Distribuidor autorizado de transferencias vehicular </p>
+         
+          <p>App personal orientado al traspaso   vehiculos </p>
       </div>
       <div class="footer-contact">
           <h4>Contactar</h4>
           <ul>
               <li><a href="#">Contacto</a></li>
-              <li><a href="mailto:info@burocraciacero.com">info@burocraciacero.com</a></li>
+              <li><a href="Adriangca228@gmail.com">Adriangca228@gmail.com</a></li>
           </ul>
       </div>
       <div class="footer-legal">
           <h4>Avisos Legales</h4>
           <ul>
-              <li><a href="https://calm-customers-004738.framer.app/avisos-legales">Aviso Legal</a></li>
+              <li><a href="">Aviso Legal</a></li>
           
           </ul>
       </div>
   </div>
   <div class="footer-bottom">
      
-      <p>Copyright © 2025 International Solutions Enterprise LLC – Derechos Reservados</p>
+      <p>Copyright © 2025 Adrian Gonzalez– Derechos Reservados</p>
   </div>
 </footer>
 
 <style>
   footer {
-      background-color: #612f2f;
+      background-color: #2E5A88;
       color: white;
       padding: 30px 0;
       text-align: center;

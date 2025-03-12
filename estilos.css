@@ -61,7 +61,7 @@ h1 {
 .card-form input:focus,
 .card-form select:focus {
   outline: none;
-  border-color: #723737;
+  border-color: #2E5A88;
 }
 
 .card-form button {
@@ -77,14 +77,15 @@ h1 {
 }
 
 .card-form .pepe {
-  background-color: #854949;
+  background-color: #2E5A88;
+
   color: #fff;
   font-size: 14px;
   padding: 10px;
 }
 
 .card-form .pepe:hover {
-  background-color: #502626;
+  background-color: #2E5A88;
   text-decoration: none;
   color: #ffffff;
 }
@@ -255,7 +256,7 @@ h1 {
 
 .pago-datos button {
   padding: 12px; /* Espaciado interno mayor */
-  background-color: #7a3b3b;
+  background-color: #2E5A88; 
   color: white;
   border: none;
   border-radius: 8px; /* Bordes redondeados más grandes */
@@ -309,7 +310,7 @@ h1 {
 }
 
 .pago-resumen button:hover {
-  background-color: #502626;
+  background-color: #2E5A88;
 }
 
 /* Ajustes para pantallas pequeñas */
@@ -388,7 +389,7 @@ h1 {
 }
 
 .drop-area {
-  border: 2px dashed #7a3b3b;
+  border: 2px dashed #2E5A88; 
   padding: 20px;
   text-align: center;
   background-color: #fff;
@@ -501,7 +502,7 @@ body {
   cursor: pointer;
   border: none;
   border-radius: 6px;
-  background-color: #7a3b3b;
+  background-color: #2E5A88;
   color: white;
   flex: 1;
   font-family:sans-serif ; 
@@ -509,15 +510,18 @@ body {
 }
 
 .documento-opciones button:hover {
-  background-color: #5a2929;
+  background-color: #2E5A88;
+  
 }
 
 .documento-opciones .btn-mas-tarde {
-  background-color: #7a3b3b;
+  background-color: #2E5A88;
+  
 }
 
 .documento-opciones .btn-mas-tarde:hover {
-  background-color: #361414;
+  background-color: #2E5A88;
+  
 }
 
 /* Ajustes para pantallas pequeñas */
@@ -605,7 +609,7 @@ body {
   padding: 4px; /* Reducir padding en botones */
   width: 100%; /* Botones más anchos */
   margin-top: 4px; /* Espacio superior */
-  background-color: #723737; /* Color de fondo del botón */
+  background-color: #2E5A88; /* Color de fondo del botón */
   color: white; /* Color de texto del botón */
   border: none; /* Sin bordes */
   border-radius: 4px; /* Bordes redondeados */
@@ -616,7 +620,7 @@ body {
 
 /* Estilo para los botones al pasar el mouse */
 .card-table button:hover {
-  background-color: #502626; /* Cambio de color en hover */
+  background-color: #2E5A88; /* Cambio de color en hover */
 }
 
 /* Clase para animación horizontal de la tarjeta */
@@ -628,7 +632,7 @@ body {
 .flatpickr-day:hover,
 .flatpickr-day.selected:hover,
 .flatpickr-day.today:hover {
-  background: #723737; /* Color más oscuro al hacer hover */
+  background: #2E5A88; /* Color más oscuro al hacer hover */
   color: white; /* Texto blanco para contraste */
   border-radius: 50%; /* Mantener forma circular */
 }
@@ -636,7 +640,7 @@ body {
 /* Ajustar hover para los botones de navegación */
 .flatpickr-prev-month:hover,
 .flatpickr-next-month:hover {
-  background: #723737; /* Fondo consistente con el día seleccionado */
+  background: #2E5A88; /* Fondo consistente con el día seleccionado */
   color: white; /* Texto blanco */
   border-radius: 50%; /* Mantener bordes redondeados */
 }
@@ -646,12 +650,12 @@ body {
   .flatpickr-day:hover,
   .flatpickr-day.selected:hover,
   .flatpickr-day.today:hover {
-    background: #723737; /* Color más oscuro en pantallas pequeñas */
+    background: #2E5A88; /* Color más oscuro en pantallas pequeñas */
   }
 
   .flatpickr-prev-month:hover,
   .flatpickr-next-month:hover {
-    background: #723737; /* Consistencia para botones de navegación */
+    background: #2E5A88; /* Consistencia para botones de navegación */
   }
 }
 
@@ -672,7 +676,7 @@ input[type="number"] {
 
 /* Cambiar color del borde al enfocar */
 input:focus {
-  border-color: #723737;
+  border-color: #2E5A88;
   outline: none;
 }
 
@@ -695,7 +699,7 @@ input:focus {
 
 /* Color de fondo para la opción activa */
 .ui-state-active {
-  background-color: #723737 !important;
+  background-color: #2E5A88 !important;
   color: white !important;
 }
 
@@ -887,7 +891,7 @@ body {
 .header-item i {
   font-size: 24px;
   margin-right: 10px;
-  color: #502626;
+  color: #2E5A88; 
 }
 
 .features {
@@ -910,7 +914,7 @@ body {
 .feature i {
   font-size: 24px;
   margin-right: 15px;
-  color: #723737;
+  color: #2E5A88;
 }
 
 /* Contenedor principal de precios */
@@ -942,7 +946,7 @@ body {
 }
 
 .price-button {
-  background-color: #5e2c2c;
+  background-color: #2E5A88;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -957,7 +961,7 @@ body {
 }
 
 .price-button:hover {
-  background-color: #4a2222;
+  background-color: #2E5A88;
 }
 
 .price-card:hover {
@@ -980,7 +984,7 @@ body {
   font-size: 28px;
   font-weight: bold;
   margin: 10px 0;
-  color: #723737;
+  color: #2E5A88;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   font-family:sans-serif ; 
  ;  /* Asegurar que use Roboto */
@@ -1008,7 +1012,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: #723737;
+  color: #2E5A88;
   font-weight: 500;
   font-family:sans-serif ; 
  ;  /* Asegurar que use Roboto */
@@ -1017,7 +1021,8 @@ body {
 /* Iconos */
 .price-card .price-details ul li i {
   font-size: 18px;
-  color: #7a3b3b;
+  color: #2E5A88;
+ 
 }
 
 /* Botón dentro de la tarjeta */
@@ -1027,7 +1032,8 @@ body {
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  background-color: #7a3b3b;
+  color: #2E5A88;
+
   border: none;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -1038,7 +1044,8 @@ body {
 }
 
 .price-card button:hover {
-  background-color: #5e2c2c;
+  color: #2E5A88;
+ 
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
@@ -1106,7 +1113,7 @@ body {
 }
 
 .nav-links a {
-  color: rgb(54, 18, 18);
+  color: #2E5A88;
   padding-inline: 15px; /* Reduce un poco el espacio lateral */
   text-decoration: none;
   font-size: 15px; /* Tamaño ligeramente mayor */
@@ -1116,7 +1123,7 @@ body {
 }
 
 .nav-links a:hover {
-  color: #502626; /* Color del texto */
+  color: #2E5A88; /* Color del texto */
   transform: scale(1.1); /* Efecto hover más sutil */
 }
 
@@ -1128,7 +1135,7 @@ body {
 
 /* Botón de contacto */
 #contact-button {
-  background-color: #69322a;
+  background-color:#2E5A88; 
   color: white;
   padding: 8px 18px; /* Reduce el padding */
   border: none;
@@ -1178,7 +1185,7 @@ body {
 }
 
 #contact-menu a i {
-  color: #69322a;
+  color: #2E5A88;
 }
 
 
@@ -1212,7 +1219,7 @@ body {
 .feature i {
   font-size: 24px;
   margin-right: 15px;
-  color: #723737;
+  color: #2E5A88;
 }
 
 .autocomplete-list {
@@ -1720,7 +1727,7 @@ label {
 }
 
 .dropbtn {
-  color: rgb(54, 18, 18);
+  color: #2E5A88;
   text-decoration: none;
   font-size: 15px;
   font-weight: 300; /* Menos grosor */
@@ -2035,4 +2042,103 @@ label {
   .gestoria-img {
     max-width: 100%; /* Ajustar el tamaño de las imágenes en móviles pequeños */
   }
+}
+
+
+/* Clase 1: Animación de cambio de colores y palpito lento (tonos azules) */
+.animacion-titulo {
+  font-size: 2rem; /* Tamaño más pequeño */
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #ffffff;
+  background: linear-gradient(90deg, #2575fc, #36e8ee, #2575fc); /* Degradado azul */
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cambioColor 5s infinite, palpito 2s infinite;
+}
+
+@keyframes cambioColor {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes palpito {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); } /* Palpito más suave */
+  100% { transform: scale(1); }
+}
+
+/* Clase 2: Fondo degradado con sombra (tonos azules) */
+.fondo-degradado {
+  background: linear-gradient(135deg, #2575fc, #6a11cb); /* Degradado azul */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  text-align: center;
+}
+
+/* Clase 3: Borde animado (tonos azules) */
+.borde-animado {
+  border: 4px solid transparent;
+  border-radius: 10px;
+  padding: 15px;
+  animation: cambiarBorde 3s infinite;
+}
+
+@keyframes cambiarBorde {
+  0% { border-color: #2575fc; } /* Azul claro */
+  50% { border-color: #6a11cb; } /* Azul oscuro */
+  100% { border-color: #2575fc; } /* Azul claro */
+}
+
+/* Clase 4: Texto con sombra animada (tonos azules) */
+.texto-sombra {
+  font-size: 1.5rem; /* Tamaño más pequeño */
+  font-weight: bold;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: moverSombra 3s infinite;
+}
+
+@keyframes moverSombra {
+  0% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  50% { text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); }
+  100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+}
+
+/* Clase 5: Botón con efecto de brillo (tonos azules) */
+.boton-brillante {
+  background: linear-gradient(90deg, #2575fc, #67aff3); /* Degradado azul */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(37, 117, 252, 0.7); /* Sombra azul */
+  animation: brillo 2s infinite;
+}
+
+@keyframes brillo {
+  0% { box-shadow: 0 0 10px rgba(37, 117, 252, 0.7); }
+  50% { box-shadow: 0 0 20px rgba(37, 117, 252, 1); }
+  100% { box-shadow: 0 0 10px rgba(37, 117, 252, 0.7); }
+}
+
+/* Clase 6: Tarjeta con efecto de levitación (tonos azules) */
+.tarjeta-levitante {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-levitante:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
